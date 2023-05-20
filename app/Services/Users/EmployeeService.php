@@ -32,14 +32,14 @@ class EmployeeService
     {
         $user = $this->user->storeUser($request);
         $employee = Employee::create([
-            'user_id' => $user->id,
+            'user_id' =>$user->id,
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'note' => $request->note,
         ]);
         return response()->json([
             'employee' => $employee,
-            'user' => $user,
+//            'user' => $user,
         ]);
 
     }

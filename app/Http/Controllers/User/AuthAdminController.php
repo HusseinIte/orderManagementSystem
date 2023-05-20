@@ -4,25 +4,30 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\LoginRequest;
+use App\Services\Users\AdminService;
 use Illuminate\Http\Request;
 
 class AuthAdminController extends Controller
 {
-    public function showAdminView()
+    protected $adminService;
+
+    public function __construct(AdminService $adminService)
     {
-        return view('admin.auth.login');
+        $this->adminService = $adminService;
+    }
+
+    public function showAdminLogin()
+    {
+        return $this->adminService->showAdminLogin();
     }
 
     public function login(LoginRequest $request)
     {
-        if (auth()->guard('admin')->attempt(['email' => $request->input('email'), 'password' => $request->input('password')])) {
-            return redirect()->route('admin.dashboard');
-        }
-        return redirect()->route('admin.showLogin');
-
+        return $this->adminService->login($request);
     }
-    public function logout(){
-        auth()->logout();
-        return redirect()->route('admin.showLogin');
+
+    public function logout()
+    {
+        $this->adminService->logout();
     }
 }

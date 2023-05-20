@@ -3,6 +3,7 @@
 use App\Http\Controllers\Offer\OfferController;
 use App\Http\Controllers\Order\OrderController;
 use App\Http\Controllers\Product\ProductController;
+use App\Http\Controllers\User\AdminController;
 use App\Http\Controllers\User\AuthAdminController;
 use App\Http\Controllers\User\CustomerController;
 use App\Http\Controllers\User\DashboardController;
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\Route;
  *  Admin Route
  */
 Route::middleware('auth:admin')->group(function () {
-    Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/logout', [AuthAdminController::class, 'logout'])->name('admin.logout');
     Route::prefix('employee')->group(function () {
         Route::get('/', [EmployeeController::class, 'index'])->name('admin.employee.index');
@@ -34,9 +35,8 @@ Route::middleware('auth:admin')->group(function () {
         Route::get('/', [OrderController::class, 'index'])->name('admin.order.index');
     });
 });
-
 Route::group(['middleware' => 'guest:admin'], function () {
-    Route::get('login', [AuthAdminController::class, 'showAdminView'])->name('admin.showLogin');
+    Route::get('login', [AuthAdminController::class, 'showAdminLogin'])->name('admin.showLogin');
     Route::post('login', [AuthAdminController::class, 'login'])->name('admin.login');
 });
 

@@ -5,6 +5,7 @@ namespace App\Services\Products;
 
 
 use App\Models\Product\Product;
+use App\Models\Product\ProductAttribute;
 use App\Services\ImageService;
 use Illuminate\Http\Request;
 use function Symfony\Component\Translation\t;
@@ -32,7 +33,7 @@ class ProductService
             'price' => $request->price,
             'alertAmount' => $request->alertAmount,
         ]);
-        $this->imageService->uploadProductImage($request, $product->id);
+//        $this->imageService->uploadProductImage($request, $product->id);
         $this->storeAttributes($request, $product->id);
 
 

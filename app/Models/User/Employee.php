@@ -14,4 +14,10 @@ class Employee extends Model
         'last_name',
         'note',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }

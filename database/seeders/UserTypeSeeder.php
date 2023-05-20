@@ -14,9 +14,6 @@ class UserTypeSeeder extends Seeder
     public function run(): void
     {
         UserType::create([
-            'type' => 'أدمن',
-        ]);
-        UserType::create([
             'type' => 'مستودع',
         ]);
         UserType::create([

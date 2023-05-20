@@ -2,7 +2,7 @@
 
 namespace App\Models\User;
 
-use App\Models\Shopping\ShoppingSession;
+use App\Models\Shopping\Cart;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -29,9 +29,24 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
-    public function shopping_session()
+    public function type()
     {
-        return $this->hasOne(ShoppingSession::class);
+        $this->belongsTo(UserType::class);
+    }
+
+    public function Cart()
+    {
+        return $this->hasOne(Cart::class);
+    }
+
+    public function customer()
+    {
+        return $this->hasOne(Customer::class);
+    }
+
+    public function employee()
+    {
+        return $this->hasOne(Employee::class);
     }
 
     public function getJWTIdentifier()

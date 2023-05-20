@@ -1,6 +1,11 @@
 <?php
 
+use App\Http\Controllers\Product\ProductController;
+use App\Http\Controllers\Shopping\CartController;
 use App\Http\Controllers\User\AuthController;
+use App\Http\Controllers\User\CustomerController;
+use App\Http\Controllers\User\EmployeeController;
+use App\Http\Controllers\User\UserController;
 use App\Services\Users\EmployeeService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -16,9 +21,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::controller(AuthController::class)->group(function () {
-    Route::post('login', 'login');
-    Route::post('register', 'register');
-    Route::post('logout', 'logout');
-    Route::post('refresh', 'refresh');
+
+Route::prefix('customer')->group(function () {
+    Route::post('register', [CustomerController::class, 'register']);
+    Route::post('login', [UserController::class, 'login']);
+    Route::get('/logout', [UserController::class, 'logout']);
+    Route::post('/addToCart',[CartController::class,'addToCart'])->middleware('auth:api');
 });
+
+Route::prefix('product')->group(function () {
+    Route::post('store', [ProductController::class, 'storeProduct']);
+});
+
+
