@@ -26,22 +26,24 @@ class ProductService
 
     public function storeProduct(Request $request)
     {
+        $jsonData=$request->input('data');
+        $data= json_decode($jsonData);
         $product = Product::create([
-            'category_id' => $request->category_id,
-            'numberModel' => $request->numberModel,
-            'amount' => $request->amount,
-            'price' => $request->price,
-            'alertAmount' => $request->alertAmount,
+            'category_id' => $data->category_id,
+            'numberModel' => $data->numberModel,
+            'amount' => $data->amount,
+            'price' => $data->price,
+            'alertAmount' => $data->alertAmount,
         ]);
-//        $this->imageService->uploadProductImage($request, $product->id);
-        $this->storeAttributes($request, $product->id);
+        $this->imageService->uploadProductImage($request, $product->id);
+        $this->storeAttributes($data, $product->id);
 
 
     }
 
-    public function storeAttributes(Request $request, $id)
+    public function storeAttributes($data, $id)
     {
-        $attributes = $request->input('attributes');
+        $attributes = $data->attributes;
         foreach ($attributes as $key => $value) {
             ProductAttribute::create([
                 'product_id' => $id,

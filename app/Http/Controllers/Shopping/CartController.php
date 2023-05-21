@@ -9,12 +9,26 @@ use Illuminate\Http\Request;
 class CartController extends Controller
 {
     protected $cartService;
+
     public function __construct(CartService $cartService)
     {
-        $this->cartService=$cartService;
+        $this->cartService = $cartService;
     }
 
-    public function addToCart(Request $request){
+    public function addToCart(Request $request)
+    {
         return $this->cartService->addToCart($request);
     }
+
+// parameter : id for cart Item
+    public function minusQuantityItem($id)
+    {
+        return $this->cartService->minusQuantityItem($id);
+    }
+
+    public function plusQuantityItem($id)
+    {
+        return $this->cartService->plusQuantityItem($id);
+    }
+
 }

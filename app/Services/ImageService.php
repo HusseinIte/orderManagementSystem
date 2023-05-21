@@ -5,7 +5,8 @@ namespace App\Services;
 
 
 use App\Models\Image\Image;
-use App\Models\Image\ProductImage;
+
+use App\Models\Product\ProductImage;
 use Illuminate\Http\Request;
 use function PHPUnit\Framework\size;
 
@@ -30,8 +31,8 @@ class ImageService
             $name = $image->hashName();
             $path = $image->storeAs('ProductsImage', $name, 'my_files');
             ProductImage::create([
-                'name' => $name,
-                'product_id' => $id
+                'product_id' => $id,
+                'path'=>$path
             ]);
         }
 

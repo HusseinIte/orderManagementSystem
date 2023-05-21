@@ -23,15 +23,39 @@ class CartService
             'cart_id' => $cart->id,
             'quantity' => $request->quantity
         ]);
-        $this->updateTotalPriceCart($request, $cart);
+        $this->updateTotalPriceCart($cartItem);
     }
 
-    public function updateTotalPriceCart(Request $request, $cart)
+    public function updateTotalPriceCart(CartItem $cartItem)
     {
-        $product = Product::find($request->product_id);
+        $product = $cartItem->product();
+        $cart = $cartItem->Cart();
         $oldTotal = $cart->totalPrice;
-        $cart->totalPrice = $oldTotal + ($request->quantity * $product->price);
+        $cart->totalPrice = $oldTotal + ($cartItem->quantity * $product->price);
         $cart->save();
+    }
+
+// parameter : id for cart Item
+    public function minusQuantityItem($id)
+    {
+        $cart_item = CartItem::find($id);
+        $quantity = $cart_item->quantity;
+        if ($quantity > 1) {
+            $cart_item->quantity = $quantity - 1;
+        }
+        $cart_item->quantity = 1;
+        $cart_item->save();
+        $this->updateTotalPriceCart($cart_item);
+
+    }
+
+    public function plusQuantityItem($id)
+    {
+        $cart_item = CartItem::find($id);
+        $quantity = $cart_item->quantity;
+        $cart_item->quantity = $quantity + 1;
+        $cart_item->save();
+        $this->updateTotalPriceCart($cart_item);
     }
 
     public function getCartForUser()
