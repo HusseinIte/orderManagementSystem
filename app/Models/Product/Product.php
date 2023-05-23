@@ -3,8 +3,11 @@
 namespace App\Models\Product;
 
 use App\Models\Category\Category;
+use App\Models\Order\OrderItem;
+use App\Models\Shopping\CartItem;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use function League\Flysystem\has;
 
 class Product extends Model
 {
@@ -34,6 +37,11 @@ class Product extends Model
 
     public function cartItem()
     {
-        return $this->hasOne(Product::class);
+        return $this->hasOne(CartItem::class);
+    }
+
+    public function orderItem()
+    {
+        return $this->hasOne(OrderItem::class);
     }
 }

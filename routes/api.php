@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Order\OrderController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Shopping\CartController;
 use App\Http\Controllers\User\AuthController;
@@ -25,12 +26,19 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('customer')->group(function () {
     Route::post('register', [CustomerController::class, 'register']);
     Route::post('login', [UserController::class, 'login']);
-    Route::get('/logout', [UserController::class, 'logout']);
-    Route::post('/addToCart',[CartController::class,'addToCart'])->middleware('auth:api');
+    Route::middleware('auth:api')->group(function () {
+        Route::get('/logout', [UserController::class, 'logout']);
+        Route::post('/addToCart', [CartController::class, 'addToCart']);
+//        Route::post('sendOrder',[])
+    });
+
 });
 
 Route::prefix('product')->group(function () {
     Route::post('store', [ProductController::class, 'storeProduct']);
+    Route::get('allProducts', [ProductController::class, 'getAllProduct']);
 });
-
+Route::prefix('order')->group(function () {
+    Route::get('allOrder', [OrderController::class, 'getAllOrder']);
+});
 

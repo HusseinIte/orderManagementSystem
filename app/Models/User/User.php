@@ -2,6 +2,7 @@
 
 namespace App\Models\User;
 
+use App\Models\Order\Order;
 use App\Models\Shopping\Cart;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -34,7 +35,7 @@ class User extends Authenticatable implements JWTSubject
         $this->belongsTo(UserType::class);
     }
 
-    public function Cart()
+    public function cart()
     {
         return $this->hasOne(Cart::class);
     }
@@ -47,6 +48,11 @@ class User extends Authenticatable implements JWTSubject
     public function employee()
     {
         return $this->hasOne(Employee::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 
     public function getJWTIdentifier()

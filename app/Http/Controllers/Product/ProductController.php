@@ -9,14 +9,20 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
     protected $productService;
+
     public function __construct(ProductService $productService)
     {
-        $this->productService=$productService;
+        $this->productService = $productService;
     }
 
     public function index()
     {
         return $this->productService->index();
+    }
+
+    public function getAllProduct()
+    {
+        return $this->productService->getAllProduct();
     }
 
     public function storeProduct(Request $request)

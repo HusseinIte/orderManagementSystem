@@ -4,6 +4,7 @@
 namespace App\Services\Products;
 
 
+use App\Http\Response\ProductResponse;
 use App\Models\Product\Product;
 use App\Models\Product\ProductAttribute;
 use App\Services\ImageService;
@@ -24,10 +25,15 @@ class ProductService
         return view('admin.product.index');
     }
 
+    public function getAllProduct()
+    {
+       return (new ProductResponse)->toJson();
+    }
+
     public function storeProduct(Request $request)
     {
-        $jsonData=$request->input('data');
-        $data= json_decode($jsonData);
+        $jsonData = $request->input('data');
+        $data = json_decode($jsonData);
         $product = Product::create([
             'category_id' => $data->category_id,
             'numberModel' => $data->numberModel,
