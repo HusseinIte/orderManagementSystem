@@ -12,7 +12,7 @@ class ProductResponse extends Response
     public function toJson()
     {
         $data = [
-            'products' => Product::with('attributes','images')->get(),
+            'products' => Product::with('attributes')->get(),
         ];
         return response()->json($data);
     }

@@ -20,11 +20,6 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function departments()
-    {
-        return $this->hasMany(OrderDepartment::class);
-    }
-
     public function orderItems()
     {
         return $this->hasMany(OrderItem::class);

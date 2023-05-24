@@ -28,13 +28,31 @@ class ImageService
     {
         $files = $request->file('images');
         foreach ($files as $image) {
-            $name = $image->hashName();
-            $path = $image->storeAs('ProductsImage', $name, 'my_files');
+//            $name = $image->hashName();
+            $path = $image->store('ProductsImage', 'my_files');
             ProductImage::create([
                 'product_id' => $id,
-                'path'=>$path
+                'path' => $path
             ]);
         }
 
+    }
+
+    public function getProductImages($productId)
+    {
+        $product = Product::findOrFail($productId);
+        $images = [];
+
+        foreach ($product->images as $image) {
+            $path = storage_path('app/public/' . $image->path);
+
+            if (File::exists($path)) {
+                $file = File::get($path);
+                $base64 = base64_encode($file);
+                $images[] = $base64;
+            }
+        }
+
+        return response()->json(['images' => $images]);
     }
 }

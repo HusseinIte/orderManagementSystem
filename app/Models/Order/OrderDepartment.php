@@ -13,7 +13,4 @@ class OrderDepartment extends Model
         'department',
         'isExecute'
     ];
-    public function order(){
-        return $this->belongsTo(Order::class);
-    }
 }

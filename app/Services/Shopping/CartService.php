@@ -28,8 +28,8 @@ class CartService
 
     public function updateTotalPriceCart(CartItem $cartItem)
     {
-        $product = $cartItem->product();
-        $cart = $cartItem->Cart();
+        $product = $cartItem->product;
+        $cart = $cartItem->cart;
         $oldTotal = $cart->totalPrice;
         $cart->totalPrice = $oldTotal + ($cartItem->quantity * $product->price);
         $cart->save();

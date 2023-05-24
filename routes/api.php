@@ -21,24 +21,29 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+// Route with authentication
+Route::middleware('auth:api')->group(function () {
 
-
-Route::prefix('customer')->group(function () {
-    Route::post('register', [CustomerController::class, 'register']);
-    Route::post('login', [UserController::class, 'login']);
-    Route::middleware('auth:api')->group(function () {
+    // ------- Route Customer ------------
+    Route::prefix('customer')->group(function () {
         Route::get('/logout', [UserController::class, 'logout']);
         Route::post('/addToCart', [CartController::class, 'addToCart']);
-//        Route::post('sendOrder',[])
+        Route::post('sendOrder', [CustomerController::class, 'sendOrder']);
+    });
+//    --------------  Route Product --------------
+
+    Route::prefix('product')->group(function () {
+        Route::post('store', [ProductController::class, 'storeProduct']);
+        Route::get('allProducts', [ProductController::class, 'getAllProduct']);
+    });
+//    ------------ Route Order  ----------------------------
+    Route::prefix('order')->group(function () {
+        Route::get('allOrder', [OrderController::class, 'getAllOrder']);
     });
 
 });
-
-Route::prefix('product')->group(function () {
-    Route::post('store', [ProductController::class, 'storeProduct']);
-    Route::get('allProducts', [ProductController::class, 'getAllProduct']);
+// Route without authentication
+Route::prefix('customer')->group(function () {
+    Route::post('register', [CustomerController::class, 'register']);
+    Route::post('login', [UserController::class, 'login']);
 });
-Route::prefix('order')->group(function () {
-    Route::get('allOrder', [OrderController::class, 'getAllOrder']);
-});
-

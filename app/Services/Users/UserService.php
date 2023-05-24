@@ -14,7 +14,7 @@ class UserService
     public function storeUser(Request $request)
     {
         return User::create([
-            'user_type_id' =>$request->user_type,
+            'user_type_id' => $request->user_type_id,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);

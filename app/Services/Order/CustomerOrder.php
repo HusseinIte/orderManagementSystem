@@ -4,6 +4,7 @@
 namespace App\Services\Order;
 
 
+use App\Events\SendOrder;
 use App\Models\Order\Order;
 use App\Models\Order\OrderItem;
 use App\Models\Shopping\Cart;
@@ -15,7 +16,7 @@ use Illuminate\Support\Facades\Auth;
 
 class CustomerOrder
 {
-    public function getAllOrder()
+    public function getMyOrder()
     {
         $user = User::find(Auth::id());
         return $user->orders;
@@ -32,11 +33,12 @@ class CustomerOrder
             'totalPrice' => $cart->totalPrice
         ]);
         $this->storeOrderItem($cart, $order->id);
+        return $order;
     }
 
     public function storeOrderItem(Cart $cart, $id)
     {
-        $cartItems = $cart->cartItems();
+        $cartItems = $cart->cartItems;
         foreach ($cartItems as $item) {
             OrderItem::create([
                 'order_id' => $id,
@@ -49,7 +51,8 @@ class CustomerOrder
 // send order from user to warehouse
     public function sendOrder(Request $request)
     {
-        $this->createOrder($request);
+        $order = $this->createOrder($request);
+        SendOrder::dispatch($order);
         return response()->json([
             'status' => 'success',
             'message' => 'تم إرسال الطلب بنجاح'
