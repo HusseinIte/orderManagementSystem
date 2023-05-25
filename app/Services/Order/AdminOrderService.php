@@ -4,7 +4,7 @@
 namespace App\Services\Order;
 
 
-class AdminOrder
+class AdminOrderService
 {
 
 }

@@ -4,13 +4,10 @@ namespace App\Models\Order;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class OrderDepartment extends Model
+class DepartmentOrder extends Pivot
 {
     use HasFactory;
-    protected $fillable = [
-        'order_id',
-        'department',
-        'isExecute'
-    ];
+    public $incrementing = true;
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Services\Order\CustomerOrder;
+use App\Services\Order\CustomerOrderService;
 use App\Services\Users\CustomerService;
 use App\Services\Users\UserService;
 use Illuminate\Http\Request;
@@ -27,7 +27,5 @@ class CustomerController extends Controller
     {
         return $this->customerService->register($request);
     }
-    public function sendOrder(CustomerOrder $customerOrder,Request $request){
-        return $customerOrder->sendOrder($request);
-    }
+
 }

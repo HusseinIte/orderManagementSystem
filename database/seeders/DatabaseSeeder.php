@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\Category\Category;
 use App\Models\Category\CategoryAttribute;
+use App\Models\Order\Department;
 use App\Models\User\User;
 
 
@@ -21,11 +22,12 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserTypeSeeder::class,
             AdminSeeder::class,
+            DepartmentSeeder::class,
 //            UserSeeder::class,
 //            OrderSeeder::class,
             CategorySeeder::class,
-            CategoryAttributeSeeder::class,
-            CategoryAttributeValueSeeder::class
+//            CategoryAttributeSeeder::class,
+//            CategoryAttributeValueSeeder::class
 
         ]);
     }

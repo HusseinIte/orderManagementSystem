@@ -24,4 +24,9 @@ class Order extends Model
     {
         return $this->hasMany(OrderItem::class);
     }
+
+    public function departments()
+    {
+        return $this->belongsToMany(Department::class)->using(DepartmentOrder::class)->withTimestamps();
+    }
 }

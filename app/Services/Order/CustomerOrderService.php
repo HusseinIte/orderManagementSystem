@@ -14,7 +14,7 @@ use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class CustomerOrder
+class CustomerOrderService
 {
     public function getMyOrder()
     {

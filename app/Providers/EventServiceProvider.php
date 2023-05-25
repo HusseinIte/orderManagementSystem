@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Events\ExecuteOrder;
 use App\Events\SendOrder;
 use App\Listeners\ChangeOrderStatus;
+use App\Listeners\MoveOrderToDelivery;
 use App\Listeners\MoveOrderToWarehouse;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -23,8 +25,11 @@ class EventServiceProvider extends ServiceProvider
         ],
         SendOrder::class => [
             MoveOrderToWarehouse::class,
-            ChangeOrderStatus::class,
+        ],
+        ExecuteOrder::class => [
+            MoveOrderToDelivery::class,
         ]
+
     ];
 
     /**
