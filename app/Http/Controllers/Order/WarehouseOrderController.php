@@ -15,6 +15,21 @@ class WarehouseOrderController extends Controller
         $this->warehouseOrder = $warehouseOrder;
     }
 
+    public function getAllOrder()
+    {
+        return $this->warehouseOrder->getAllOrder();
+    }
+
+    public function getExecutedOrder()
+    {
+        return $this->warehouseOrder->getExecutedOrder();
+    }
+
+    public function getNonExecutedOrder()
+    {
+        return $this->warehouseOrder->getNonExecutedOrder();
+    }
+
     public function executeOrder($id)
     {
         return $this->warehouseOrder->executeOrder($id);

@@ -19,6 +19,18 @@ class WarehouseOrderService
         return $department->orders;
     }
 
+    public function getExecutedOrder()
+    {
+        $department = Department::find(1);
+        return $department->orders()->wherePivot('isExecute', 1);
+    }
+
+    public function getNonExecutedOrder()
+    {
+        $department = Department::find(1);
+        return $department->orders()->wherePivot('isExecute', 0);
+    }
+
     public function updateStock(Order $order)
     {
         $orderItems = $order->orderItems;
@@ -50,5 +62,6 @@ class WarehouseOrderService
             }
         }
     }
+
 
 }

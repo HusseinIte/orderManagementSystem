@@ -19,8 +19,14 @@ class ImageController extends Controller
     {
         $this->imageService->uploadImage($request);
     }
+
     public function uploadMultipleImage(Request $request)
     {
         $this->imageService->uploadMultipleImage($request);
+    }
+
+    public function getProductImages($productId)
+    {
+        return $this->imageService->getProductImages($productId);
     }
 }

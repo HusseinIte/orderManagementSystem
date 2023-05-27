@@ -21,36 +21,38 @@
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-        <form>
+        <form action="{{route('admin.employee.store')}}" method="post">
+            @csrf
             <div class="card-body">
                 <div class="form-group">
                     <label for="firstName">الإسم الأول</label>
-                    <input type="text" class="form-control" id="firstName" placeholder="الإسم الأول">
+                    <input type="text" class="form-control" id="first_name" name="first_name" placeholder="الإسم الأول">
                 </div>
                 <div class="form-group">
                     <label for="lastName">الإسم الأخير</label>
-                    <input type="text" class="form-control" id="lastName" placeholder="الإسم الثاني">
+                    <input type="text" class="form-control" name="last_name" id="last_name" placeholder="الإسم الثاني">
                 </div>
                 <div class="form-group">
                     <label>نوع الموظف</label>
-                    <select class="form-control">
-                        <option>مستودع</option>
-                        <option>عامل توصيل</option>
-                        <option>صيانة</option>
+                    <select id="user_type_id" name="user_type_id" class="form-control">
+                        <option value="1">مستودع</option>
+                        <option value="2">عامل توصيل</option>
+                        <option value="3">صيانة</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="InputEmail">البريد الإلكتروني</label>
-                    <input type="email" class="form-control" id="InputEmail" placeholder="أدخل الايميل">
+                    <input type="email" class="form-control" name="email" id="email" placeholder="أدخل الايميل">
                 </div>
                 <div class="form-group">
                     <label for="InputPassword">كلمة المرور</label>
-                    <input type="password" class="form-control" id="InputPassword" placeholder="كلمة المرور">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="كلمة المرور">
                 </div>
                 <!-- textarea -->
                 <div class="form-group">
                     <label>ملاحظة</label>
-                    <textarea class="form-control" rows="3" placeholder="أدخل ملاحظة ..."></textarea>
+                    <textarea id="note" name="note" class="form-control" rows="3"
+                              placeholder="أدخل ملاحظة ..."></textarea>
                 </div>
             </div>
             <!-- /.card-body -->

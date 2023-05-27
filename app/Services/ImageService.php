@@ -6,8 +6,12 @@ namespace App\Services;
 
 use App\Models\Image\Image;
 
+use App\Models\Product\Product;
 use App\Models\Product\ProductImage;
+
+
 use Illuminate\Http\Request;
+use Illuminate\Http\File;
 use function PHPUnit\Framework\size;
 
 class ImageService
@@ -53,6 +57,9 @@ class ImageService
             }
         }
 
-        return response()->json(['images' => $images]);
+        return response()->json([
+            'message'=>'OK',
+            'images' => $images,
+            ]);
     }
 }

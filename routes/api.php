@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Image\ImageController;
 use App\Http\Controllers\Order\CustomerOrderController;
 use App\Http\Controllers\Order\OrderController;
 use App\Http\Controllers\Order\WarehouseOrderController;
@@ -35,7 +36,9 @@ Route::middleware('auth:api')->group(function () {
     });
 //    -------------- Route Warehouse --------------
     Route::prefix('warehouse')->group(function () {
-        Route::get('allOrder', [WarehouseOrderService::class, 'getAllOrder']);
+        Route::get('allOrder', [WarehouseOrderController::class, 'getAllOrder']);
+        Route::get('executedOrder', [WarehouseOrderController::class, 'getExecutedOrder']);
+        Route::get('nonExecutedOrder', [WarehouseOrderController::class, 'getNonExecutedOrder']);
         Route::get('executeOrder/{id}', [WarehouseOrderController::class, 'executeOrder']);
     });
 //    --------------  Route Product --------------
@@ -45,13 +48,17 @@ Route::middleware('auth:api')->group(function () {
         Route::get('allProducts', [ProductController::class, 'getAllProduct']);
     });
 //    ------------ Route Order  ----------------------------
-    Route::prefix('order')->group(function () {
-        Route::get('allOrder', [OrderController::class, 'getAllOrder']);
-    });
+//    Route::prefix('order')->group(function () {
+//        Route::get('allOrder', [OrderController::class, 'getAllOrder']);
+//    });
 
 });
+Route::get('getImages/{id}', [ImageController::class, 'getProductImages']);
 // Route without authentication
 Route::prefix('customer')->group(function () {
     Route::post('register', [CustomerController::class, 'register']);
     Route::post('login', [UserController::class, 'login']);
+});
+Route::prefix('order')->group(function () {
+    Route::get('allOrder', [OrderController::class, 'getAllOrder']);
 });
