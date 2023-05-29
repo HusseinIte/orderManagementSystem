@@ -2,7 +2,7 @@
 
 namespace App\Models\Order;
 
-use App\Models\User\User;
+use App\Models\User\Customer;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,14 +10,14 @@ class Order extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'user_id',
+        'customer_id',
         'orderStatus',
         'totalPrice'
     ];
 
-    public function user()
+    public function customer()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Customer::class);
     }
 
     public function orderItems()

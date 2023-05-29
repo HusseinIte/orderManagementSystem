@@ -14,25 +14,25 @@ class OrderSeeder extends Seeder
     public function run(): void
     {
         Order::create([
-            'user_id' => 1,
+            'customer_id' => 1,
             'orderStatus' => 'جاري معالجة الطلب',
             'totalPrice' => 500000
 
         ]);
         Order::create([
-            'user_id' => 2,
+            'customer_id' => 2,
             'orderStatus' => 'جاري معالجة الطلب',
             'totalPrice' => 500000
 
         ]);
         Order::create([
-            'user_id' => 1,
+            'customer_id' => 1,
             'orderStatus' => 'جاري معالجة الطلب',
             'totalPrice' => 500000
 
         ]);
         Order::create([
-            'user_id' => 1,
+            'customer_id' => 1,
             'orderStatus' => 'جاري معالجة الطلب',
             'totalPrice' => 500000
 

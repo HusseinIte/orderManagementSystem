@@ -41,7 +41,7 @@ class CustomerService
 
     public function register(Request $request)
     {
-        $user = $this->userService->storeUser($request);
+        $user = $this->userService->storeUser($request,4);
         Cart::create([
             'user_id'=>$user->id,
             'totalPrice'=>0

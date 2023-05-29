@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Image;
 
 use App\Http\Controllers\Controller;
 use App\Services\ImageService;
+use Illuminate\Http\File;
 use Illuminate\Http\Request;
 
 class ImageController extends Controller
@@ -25,8 +26,8 @@ class ImageController extends Controller
         $this->imageService->uploadMultipleImage($request);
     }
 
-    public function getProductImages($productId)
+    public function showImage($filename)
     {
-        return $this->imageService->getProductImages($productId);
+        return $this->imageService->showImage($filename);
     }
 }

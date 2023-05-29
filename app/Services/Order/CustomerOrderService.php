@@ -26,9 +26,10 @@ class CustomerOrderService
     public function createOrder(Request $request)
     {
         $user = User::find(Auth::id());
+        $customer=$user->customer;
         $cart = $user->cart;
         $order = Order::create([
-            'user_id' => $user->id,
+            'customer_id' =>$customer->id,
             'orderStatus' => 'جاري المعالجة',
             'totalPrice' => $cart->totalPrice
         ]);

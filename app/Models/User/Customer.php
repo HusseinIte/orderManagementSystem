@@ -2,6 +2,7 @@
 
 namespace App\Models\User;
 
+use App\Models\Order\Order;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -23,5 +24,10 @@ class Customer extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
 
 }

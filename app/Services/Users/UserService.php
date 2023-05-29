@@ -11,10 +11,10 @@ use Illuminate\Support\Facades\Hash;
 
 class UserService
 {
-    public function storeUser(Request $request)
+    public function storeUser(Request $request,$user_type)
     {
         return User::create([
-            'user_type_id' => $request->user_type_id,
+            'user_type_id' =>$user_type,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);

@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Image\ImageController;
 use App\Http\Controllers\Order\CustomerOrderController;
-use App\Http\Controllers\Order\OrderController;
+use App\Http\Controllers\Order\AdminOrderController;
 use App\Http\Controllers\Order\WarehouseOrderController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Shopping\CartController;
@@ -49,16 +49,18 @@ Route::middleware('auth:api')->group(function () {
     });
 //    ------------ Route Order  ----------------------------
 //    Route::prefix('order')->group(function () {
-//        Route::get('allOrder', [OrderController::class, 'getAllOrder']);
+//        Route::get('allOrder', [AdminOrderController::class, 'getAllOrder']);
 //    });
 
 });
-Route::get('getImages/{id}', [ImageController::class, 'getProductImages']);
+
 // Route without authentication
 Route::prefix('customer')->group(function () {
     Route::post('register', [CustomerController::class, 'register']);
     Route::post('login', [UserController::class, 'login']);
 });
-Route::prefix('order')->group(function () {
-    Route::get('allOrder', [OrderController::class, 'getAllOrder']);
+Route::prefix('images')->group(function () {
+    Route::get('images/{filename}', [ImageController::class, 'showImage'])->name('image.show');
 });
+
+

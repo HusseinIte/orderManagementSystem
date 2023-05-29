@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Offer\OfferController;
-use App\Http\Controllers\Order\OrderController;
+use App\Http\Controllers\Order\AdminOrderController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\User\AdminController;
 use App\Http\Controllers\User\AuthAdminController;
@@ -32,11 +32,16 @@ Route::middleware('auth:admin')->group(function () {
         Route::get('/', [OfferController::class, 'index'])->name('admin.offer.index');
     });
     Route::prefix('order')->group(function () {
-        Route::get('/', [OrderController::class, 'index'])->name('admin.order.index');
+        Route::get('/', [AdminOrderController::class, 'index'])->name('admin.order.index');
     });
 });
 Route::group(['middleware' => 'guest:admin'], function () {
     Route::get('login', [AuthAdminController::class, 'showAdminLogin'])->name('admin.showLogin');
     Route::post('login', [AuthAdminController::class, 'login'])->name('admin.login');
 });
+
+//    ------------ Route Order  ----------------------------
+    Route::prefix('order')->group(function () {
+        Route::get('allOrder', [AdminOrderController::class, 'getAllOrder']);
+    });
 

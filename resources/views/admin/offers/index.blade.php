@@ -14,6 +14,7 @@
 
 @section('content')
     {{--   content--}}
+    <img src="{{ route('image.show', ['filename' => 'Screenshot.png']) }}" alt="Example Image">
 @endsection
 
 

@@ -12,6 +12,7 @@ use App\Models\Product\ProductImage;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\File;
+use Illuminate\Support\Facades\Storage;
 use function PHPUnit\Framework\size;
 
 class ImageService
@@ -42,24 +43,9 @@ class ImageService
 
     }
 
-    public function getProductImages($productId)
+    public function showImage($filename)
     {
-        $product = Product::findOrFail($productId);
-        $images = [];
-
-        foreach ($product->images as $image) {
-            $path = storage_path('app/public/' . $image->path);
-
-            if (File::exists($path)) {
-                $file = File::get($path);
-                $base64 = base64_encode($file);
-                $images[] = $base64;
-            }
-        }
-
-        return response()->json([
-            'message'=>'OK',
-            'images' => $images,
-            ]);
+        $path = storage_path('app/public/images/' . $filename);
+        return response()->file($path);
     }
 }
