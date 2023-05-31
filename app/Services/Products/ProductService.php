@@ -4,7 +4,7 @@
 namespace App\Services\Products;
 
 
-use App\Http\Response\ProductResponse;
+use App\Http\Resources\ProductCollection;
 use App\Models\Product\Product;
 use App\Models\Product\ProductAttribute;
 use App\Services\ImageService;
@@ -27,7 +27,7 @@ class ProductService
 
     public function getAllProduct()
     {
-       return (new ProductResponse)->toJson();
+        return new ProductCollection(Product::all());
     }
 
     public function storeProduct(Request $request)

@@ -18,11 +18,11 @@ class AdminOrderController extends Controller
 
     public function index()
     {
-        return view('admin.order.index');
+        return $this->adminOrderService->index();
     }
 
     public function getAllOrder()
     {
-       return $this->adminOrderService->getAllOrder();
+        return $this->adminOrderService->getAllOrder();
     }
 }

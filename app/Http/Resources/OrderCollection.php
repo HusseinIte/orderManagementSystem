@@ -5,20 +5,24 @@ namespace App\Http\Resources;
 use App\Models\User\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use function League\Flysystem\map;
 
 class OrderCollection extends ResourceCollection
 {
 
     public function toArray(Request $request): array
     {
-        $collection = $this->collection->map(function($item) {
-            $customer=Customer::find($item->customer_id);
-            $item->center_name=$customer->centerName;
-            return $item;
-        });
-
         return [
-            'data' => $collection
+            'data' => $this->collection->map(function ($order) {
+                return [
+                    'id' => $order->id,
+                    'center_name' => $order->customer->centerName,
+                    'orderStatus' => $order->orderStatus,
+                    'totalPrice' => $order->totalPrice,
+                    'created_at' => $order->created_at,
+                    'updated_at' => $order->updated_at
+                ];
+            })
         ];
     }
 }
