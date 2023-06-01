@@ -4,33 +4,54 @@
 namespace App\Services\Products;
 
 
+use App\Http\Resources\Product\ProductFilterCollection;
 use App\Models\Product\Product;
+use App\Models\Product\ProductAttribute;
 
 class FilterProduct
 {
 
-    public function getKidsProduct(Product $product)
+    public function getKidsProduct()
     {
-        $attributes=$product->attributes;
+        $products = ProductAttribute::where([
+            ['productAttribute', 'Age'],
+            ['productValue', 'kids']
+        ])->get();
+        return response()->json([
+            'status' => 'success',
+            'products' => new ProductFilterCollection($products)
+        ]);
+    }
 
+    public function getMenProduct()
+    {
+        $products = ProductAttribute::where([
+            ['productAttribute', 'Age'],
+            ['productValue', 'men']
+        ])->get();
+        return response()->json([
+            'status' => 'success',
+            'products' => new ProductFilterCollection($products)
+        ]);
 
     }
 
-    public function getMenProduct(Product $product)
+    public function getWomenProduct()
     {
-        $attributes=$product->attributes;
-
-    }
-
-    public function getWomenProduct(Product $product)
-    {
-        $attributes=$product->attributes;
+        $products = ProductAttribute::where([
+            ['productAttribute', 'Age'],
+            ['productValue', 'women']
+        ])->get();
+        return response()->json([
+            'status' => 'success',
+            'products' => new ProductFilterCollection($products)
+        ]);
 
     }
 
     public function searchProduct(Product $product)
     {
-        $attributes=$product->attributes;
+        $attributes = $product->attributes;
 
     }
 

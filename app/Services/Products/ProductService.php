@@ -4,11 +4,13 @@
 namespace App\Services\Products;
 
 
-use App\Http\Resources\ProductCollection;
+use App\Http\Resources\Product\ProductCollection;
+use App\Http\Resources\Product\ProductResource;
 use App\Models\Product\Product;
 use App\Models\Product\ProductAttribute;
 use App\Services\ImageService;
 use Illuminate\Http\Request;
+use function Symfony\Component\Routing\Loader\Configurator\collection;
 use function Symfony\Component\Translation\t;
 
 class ProductService
@@ -27,7 +29,7 @@ class ProductService
 
     public function getAllProduct()
     {
-        return new ProductCollection(Product::all());
+        return ProductResource::collection(Product::all());
     }
 
     public function storeProduct(Request $request)

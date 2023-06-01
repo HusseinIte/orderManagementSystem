@@ -46,6 +46,9 @@ Route::middleware('auth:api')->group(function () {
     Route::prefix('product')->group(function () {
         Route::post('store', [ProductController::class, 'storeProduct']);
         Route::get('allProducts', [ProductController::class, 'getAllProduct']);
+        Route::get('getKidsProduct', [ProductController::class, 'getKidsProduct']);
+        Route::get('getMenProduct', [ProductController::class, 'getMenProduct']);
+        Route::get('getWomenProduct', [ProductController::class, 'getWomenProduct']);
     });
 //    ------------ Route Order  ----------------------------
 //    Route::prefix('order')->group(function () {
