@@ -30,9 +30,9 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
-    public function type()
+    public function userType()
     {
-        $this->belongsTo(UserType::class);
+        return $this->belongsTo(UserType::class);
     }
 
     public function cart()

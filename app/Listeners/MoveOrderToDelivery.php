@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\ExecuteOrder;
+use App\Events\SendOrder;
 use App\Models\Order\Department;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -30,5 +31,6 @@ class MoveOrderToDelivery
         ]);
         $order->orderStatus = "الطلب جاهز في المستودع";
         $order->save();
+//        broadcast(new SendOrder($order))->toOthers();
     }
 }

@@ -4,6 +4,7 @@
 namespace App\Services\Users;
 
 
+use App\Http\Resources\UserResource;
 use App\Models\User\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -39,7 +40,7 @@ class UserService
         $user = Auth::user();
         return response()->json([
             'status' => 'success',
-            'user' => $user,
+            'user' =>new UserResource($user),
             'authorisation' => [
                 'token' => $token,
                 'type' => 'bearer',

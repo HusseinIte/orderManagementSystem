@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Events\ExecuteOrder;
 use App\Events\SendOrder;
 use App\Models\Order\OrderDepartment;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -26,6 +27,7 @@ class MoveOrderToWarehouse
         $order->departments()->attach(1, ['isExecute' => 0]);
         $order->orderStatus = "الطلب قيد الإنتظار في المستودع";
         $order->save();
+//        broadcast(new ExecuteOrder($order))->toOthers();
 
     }
 }

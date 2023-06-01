@@ -4,6 +4,7 @@
 namespace App\Services\Users;
 
 
+use App\Http\Resources\UserResource;
 use App\Models\Shopping\Cart;
 use App\Models\User\Customer;
 use Illuminate\Http\Request;
@@ -52,7 +53,7 @@ class CustomerService
             'status' => 'success',
             'message' => 'User created successfully',
             'customer' => $customer,
-            'user' => $user,
+            'user' =>new UserResource($user),
             'authorisation' => [
                 'token' => $token,
                 'type' => 'bearer',

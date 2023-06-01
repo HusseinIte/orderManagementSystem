@@ -43,7 +43,10 @@ class ProductService
         ]);
         $this->imageService->uploadProductImage($request, $product->id);
         $this->storeAttributes($data, $product->id);
-
+        return response()->json([
+            'status'=>'success',
+            'message'=>'تم حفظ المنتج بنجاح '
+        ]);
 
     }
 
