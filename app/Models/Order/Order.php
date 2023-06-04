@@ -12,8 +12,10 @@ class Order extends Model
     protected $fillable = [
         'customer_id',
         'orderStatus',
+        'orderType',
         'totalPrice'
     ];
+    protected $hidden=['pivot'];
 
     public function customer()
     {

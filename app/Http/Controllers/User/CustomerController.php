@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CustomerResource;
 use App\Services\Order\CustomerOrderService;
 use App\Services\Users\CustomerService;
 use App\Services\Users\UserService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CustomerController extends Controller
 {
@@ -26,6 +28,11 @@ class CustomerController extends Controller
     public function register(Request $request)
     {
         return $this->customerService->register($request);
+    }
+
+    public function getMyInformation()
+    {
+       return $this->customerService->getMyInformation();
     }
 
 }

@@ -6,11 +6,11 @@ namespace App\Services\Order;
 
 use App\Models\Order\Department;
 
-class DeliveryOrderService
+class MaintenanceOrderService
 {
     public function getAllOrder()
     {
-        $department = Department::find(2);
+        $department = Department::find(3);
         return $department->orders;
     }
 

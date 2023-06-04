@@ -4,6 +4,7 @@
 namespace App\Services\Users;
 
 
+use App\Http\Resources\CustomerResource;
 use App\Http\Resources\UserResource;
 use App\Models\Shopping\Cart;
 use App\Models\User\Customer;
@@ -25,11 +26,11 @@ class CustomerService
         return view('admin.customer.index');
     }
 
-    public function storeCustomer(Request $request,$user)
+    public function storeCustomer(Request $request, $user)
     {
 
         return Customer::create([
-            'user_id' =>$user->id,
+            'user_id' => $user->id,
             'firstName' => $request->firstName,
             'lastName' => $request->lastName,
             'centerName' => $request->centerName,
@@ -42,22 +43,30 @@ class CustomerService
 
     public function register(Request $request)
     {
-        $user = $this->userService->storeUser($request,4);
+        $user = $this->userService->storeUser($request, 4);
         Cart::create([
-            'user_id'=>$user->id,
-            'totalPrice'=>0
+            'user_id' => $user->id,
+            'totalPrice' => 0
         ]);
         $token = Auth::login($user);
-        $customer = $this->storeCustomer($request,$user);
+        $customer = $this->storeCustomer($request, $user);
         return response()->json([
             'status' => 'success',
             'message' => 'User created successfully',
-            'customer' => $customer,
-            'user' =>new UserResource($user),
+            'customer' => new CustomerResource($customer),
             'authorisation' => [
                 'token' => $token,
                 'type' => 'bearer',
             ]
+        ]);
+    }
+
+    public function getMyInformation()
+    {
+        $user = Auth::user();
+        $customer = $user->customer;
+        return response()->json([
+            'MyProfile' => new CustomerResource($customer)
         ]);
     }
 }

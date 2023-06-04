@@ -31,7 +31,9 @@ Route::middleware('auth:api')->group(function () {
     // ------- Route Customer ------------
     Route::prefix('customer')->group(function () {
         Route::get('/logout', [UserController::class, 'logout']);
+        Route::get('getMyInformation', [CustomerController::class, 'getMyInformation']);
         Route::post('/addToCart', [CartController::class, 'addToCart']);
+        Route::get('getMyOrder', [CustomerOrderController::class, 'getMyOrder']);
         Route::post('sendOrder', [CustomerOrderController::class, 'sendOrder']);
     });
 //    -------------- Route Warehouse --------------
@@ -41,6 +43,14 @@ Route::middleware('auth:api')->group(function () {
         Route::get('nonExecutedOrder', [WarehouseOrderController::class, 'getNonExecutedOrder']);
         Route::get('executeOrder/{id}', [WarehouseOrderController::class, 'executeOrder']);
     });
+//    ------------- Route Delivery ---------------
+    Route::prefix('delivery')->group(function () {
+        Route::get('allOrder', [DeliveryOrderController::class, 'getAllOrder']);
+    });
+//    ------------- Route Maintenance ------------
+    Route::prefix('maintenance')->group(function () {
+        Route::get('allOrder', [MaintenanceOrderController::class, 'getAllOrder']);
+    });
 //    --------------  Route Product --------------
 
     Route::prefix('product')->group(function () {
@@ -49,6 +59,7 @@ Route::middleware('auth:api')->group(function () {
         Route::get('getKidsProduct', [ProductController::class, 'getKidsProduct']);
         Route::get('getMenProduct', [ProductController::class, 'getMenProduct']);
         Route::get('getWomenProduct', [ProductController::class, 'getWomenProduct']);
+        Route::get('searchProduct/{numberModel}', [ProductController::class, 'searchProduct']);
     });
 //    ------------ Route Order  ----------------------------
 //    Route::prefix('order')->group(function () {

@@ -5,6 +5,7 @@ namespace App\Services\Order;
 
 
 use App\Events\SendOrder;
+use App\Http\Resources\OrderCollection;
 use App\Models\Order\Order;
 use App\Models\Order\OrderItem;
 use App\Models\Shopping\Cart;
@@ -18,19 +19,21 @@ class CustomerOrderService
 {
     public function getMyOrder()
     {
-        $user = User::find(Auth::id());
-        return $user->orders;
+        $customer = User::find(Auth::id())->customer;
+        $orders= $customer->orders;
+        return new OrderCollection($orders);
 
     }
 
     public function createOrder(Request $request)
     {
         $user = User::find(Auth::id());
-        $customer=$user->customer;
+        $customer = $user->customer;
         $cart = $user->cart;
         $order = Order::create([
-            'customer_id' =>$customer->id,
+            'customer_id' => $customer->id,
             'orderStatus' => 'جاري المعالجة',
+            'orderType' => 'شراء',
             'totalPrice' => $cart->totalPrice
         ]);
         $this->storeOrderItem($cart, $order->id);

@@ -39,6 +39,7 @@ class ProductService
         $product = Product::create([
             'category_id' => $data->category_id,
             'numberModel' => $data->numberModel,
+            'manufactureCompany' => $data->manufactureCompany,
             'amount' => $data->amount,
             'price' => $data->price,
             'alertAmount' => $data->alertAmount,
@@ -46,8 +47,8 @@ class ProductService
         $this->imageService->uploadProductImage($request, $product->id);
         $this->storeAttributes($data, $product->id);
         return response()->json([
-            'status'=>'success',
-            'message'=>'تم حفظ المنتج بنجاح '
+            'status' => 'success',
+            'message' => 'تم حفظ المنتج بنجاح '
         ]);
 
     }
@@ -63,4 +64,5 @@ class ProductService
             ]);
         }
     }
+
 }

@@ -23,7 +23,7 @@ class ProductResource extends JsonResource
 
     public function setImages($images)
     {
-        $images= $images->map(function ($image) {
+        $images = $images->map(function ($image) {
             return [
                 $image->path
             ];
@@ -40,6 +40,7 @@ class ProductResource extends JsonResource
         return [
             'id' => $this->id,
             'numberModel' => $this->numberModel,
+            'manufactureCompany' => $this->manufactureCompany,
             'amount' => $this->amount,
             'price' => $this->price,
             'images' => $this->setImages($this->images),

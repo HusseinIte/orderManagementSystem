@@ -35,6 +35,7 @@
                     <tr>
                         <th>رقم الطلب</th>
                         <th>اسم المركز</th>
+                        <th>نوع الطلب</th>
                         <th>تكلفة الطلب</th>
                         <th>حالة الطلب</th>
                     </tr>
@@ -44,6 +45,7 @@
                         <tr id="{{$order->id}}">
                             <td><a href="pages/examples/invoice.html">{{$order->id}}</a></td>
                             <td>{{$order->customer->centerName}}</td>
+                            <td>{{$order->orderType}}</td>
                             <td>
                                 <div class="sparkbar" data-color="#00a65a" data-height="20">{{$order->totalPrice}}</div>
                             </td>
@@ -74,7 +76,8 @@
                 // // Update the row with the new order data
                 // row.querySelector('.orderStatus').textContent = e.order.orderStatus;
                 // $('#orders-table').DataTable().ajax.reload();
-                location.reload();
+                // location.reload();
+                // console.log(e.message)
             })
             .listen('ExecuteOrder', (e) => {
                 // Find the row in the table corresponding to the updated order

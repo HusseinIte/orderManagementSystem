@@ -18,6 +18,7 @@ class OrderCollection extends ResourceCollection
                     'id' => $order->id,
                     'center_name' => $order->customer->centerName,
                     'orderStatus' => $order->orderStatus,
+                    'orderType' => $order->orderType,
                     'totalPrice' => $order->totalPrice,
                     'created_at' => $order->created_at,
                     'updated_at' => $order->updated_at
