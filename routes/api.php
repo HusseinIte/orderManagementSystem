@@ -2,17 +2,13 @@
 
 use App\Http\Controllers\Image\ImageController;
 use App\Http\Controllers\Order\CustomerOrderController;
-use App\Http\Controllers\Order\AdminOrderController;
 use App\Http\Controllers\Order\WarehouseOrderController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Shopping\CartController;
 use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\User\CustomerController;
-use App\Http\Controllers\User\EmployeeController;
 use App\Http\Controllers\User\UserController;
-use App\Services\Order\WarehouseOrderService;
-use App\Services\Users\EmployeeService;
-use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -55,11 +51,6 @@ Route::middleware('auth:api')->group(function () {
 
     Route::prefix('product')->group(function () {
         Route::post('store', [ProductController::class, 'storeProduct']);
-        Route::get('allProducts', [ProductController::class, 'getAllProduct']);
-        Route::get('getKidsProduct', [ProductController::class, 'getKidsProduct']);
-        Route::get('getMenProduct', [ProductController::class, 'getMenProduct']);
-        Route::get('getWomenProduct', [ProductController::class, 'getWomenProduct']);
-        Route::get('searchProduct/{numberModel}', [ProductController::class, 'searchProduct']);
     });
 //    ------------ Route Order  ----------------------------
 //    Route::prefix('order')->group(function () {
@@ -69,10 +60,22 @@ Route::middleware('auth:api')->group(function () {
 });
 
 // Route without authentication
+//    --------------  Route Customer --------------
 Route::prefix('customer')->group(function () {
     Route::post('register', [CustomerController::class, 'register']);
     Route::post('login', [UserController::class, 'login']);
 });
+
+//    --------------  Route Product --------------
+
+Route::prefix('product')->group(function () {
+    Route::get('allProducts', [ProductController::class, 'getAllProduct']);
+    Route::get('getKidsProduct', [ProductController::class, 'getKidsProduct']);
+    Route::get('getMenProduct', [ProductController::class, 'getMenProduct']);
+    Route::get('getWomenProduct', [ProductController::class, 'getWomenProduct']);
+    Route::get('searchProduct/{numberModel}', [ProductController::class, 'searchProduct']);
+});
+
 Route::prefix('images')->group(function () {
     Route::get('images/{filename}', [ImageController::class, 'showImage'])->name('image.show');
 });

@@ -67,4 +67,9 @@ class ProductController extends Controller
     {
         return $filterProduct->getGlassesProducts();
     }
+
+    public function getOneImageProduct($id)
+    {
+        return $this->productService->getOneImageProduct($id);
+    }
 }

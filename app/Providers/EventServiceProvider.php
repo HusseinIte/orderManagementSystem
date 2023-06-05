@@ -28,7 +28,7 @@ class EventServiceProvider extends ServiceProvider
         ],
         ExecuteOrder::class => [
             MoveOrderToDelivery::class,
-        ]
+        ],
 
     ];
 

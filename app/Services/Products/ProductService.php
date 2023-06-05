@@ -29,7 +29,15 @@ class ProductService
 
     public function getAllProduct()
     {
+
         return ProductResource::collection(Product::all());
+    }
+
+    public function getOneImageProduct($id)
+    {
+        $product = Product::find($id);
+        $image = $product->images->first();
+        return $image->path;
     }
 
     public function storeProduct(Request $request)

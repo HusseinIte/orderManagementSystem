@@ -31,7 +31,7 @@ class MoveOrderToDelivery
         ]);
         $order->orderStatus = "الطلب جاهز في المستودع";
         $order->save();
-        broadcast(new ExecuteOrder($order));
+//        broadcast(new ExecuteOrder($order));
 
     }
 }

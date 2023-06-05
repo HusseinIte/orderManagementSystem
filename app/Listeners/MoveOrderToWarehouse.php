@@ -27,7 +27,7 @@ class MoveOrderToWarehouse
         $order->departments()->attach(1, ['isExecute' => 0]);
         $order->orderStatus = "الطلب قيد الإنتظار في المستودع";
         $order->save();
-        broadcast(new SendOrder($order));
+//        broadcast(new SendOrder($order));
 
     }
 }

@@ -20,6 +20,7 @@ class OrderCollection extends ResourceCollection
                     'orderStatus' => $order->orderStatus,
                     'orderType' => $order->orderType,
                     'totalPrice' => $order->totalPrice,
+                    'orderItem' => $order->orderItems,
                     'created_at' => $order->created_at,
                     'updated_at' => $order->updated_at
                 ];
