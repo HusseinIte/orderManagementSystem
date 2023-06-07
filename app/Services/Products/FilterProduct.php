@@ -7,55 +7,51 @@ namespace App\Services\Products;
 use App\Http\Resources\Product\ProductFilterCollection;
 use App\Http\Resources\Product\ProductResource;
 use App\Models\Category\Category;
+use App\Models\Product\FrameAttribute;
 use App\Models\Product\Product;
-use App\Models\Product\ProductAttribute;
-use http\Env\Response;
 use http\Exception;
-use function Symfony\Component\Routing\Loader\Configurator\collection;
-use function Termwind\ValueObjects\pr;
 
 class FilterProduct
 {
 
     public function getKidsProduct()
     {
-        $products = ProductAttribute::where([
-            ['productAttribute', 'frameClass'],
-            ['productValue', 'kids']
-        ])->get();
+        $Frame=FrameAttribute::where('frameClass','أطفال')->get();
+        $menFrames=$Frame->map(function ($menFram){
+            return $menFram->product;
+        });
         return response()->json([
             'status' => 'success',
-            'products' => new ProductFilterCollection($products)
+            'products' =>ProductResource::collection($menFrames)
         ]);
     }
 
     public function getMenProduct()
     {
-        $products = ProductAttribute::where([
-            ['productAttribute', 'frameClass'],
-            ['productValue', 'men']
-        ])->get();
+        $Frame=FrameAttribute::where('frameClass','رجالي')->get();
+        $menFrames=$Frame->map(function ($menFram){
+            return $menFram->product;
+        });
         return response()->json([
             'status' => 'success',
-            'products' => new ProductFilterCollection($products)
+            'products' =>ProductResource::collection($menFrames)
         ]);
-
     }
 
     public function getWomenProduct()
     {
-        $products = ProductAttribute::where([
-            ['productAttribute', 'frameClass'],
-            ['productValue', 'women']
-        ])->get();
+        $Frame=FrameAttribute::where('frameClass','نسائي')->get();
+        $menFrames=$Frame->map(function ($menFram){
+            return $menFram->product;
+        });
         return response()->json([
             'status' => 'success',
-            'products' => new ProductFilterCollection($products)
+            'products' =>ProductResource::collection($menFrames)
         ]);
 
     }
 
-    public function getBorderProducts()
+    public function getFrameProducts()
     {
 //        category 1
         $category = Category::find(1);
@@ -73,7 +69,7 @@ class FilterProduct
 
     }
 
-    public function getGlassesProducts()
+    public function getLensesProducts()
     {
 //        category 3
         $category = Category::find(3);

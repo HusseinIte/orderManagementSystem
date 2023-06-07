@@ -28,9 +28,19 @@ class ProductController extends Controller
         return $this->productService->getAllProduct();
     }
 
-    public function storeProduct(Request $request)
+    public function storeDevice(Request $request)
     {
-        return $this->productService->storeProduct($request);
+        return $this->productService->storeDevice($request);
+    }
+
+    public function storeLenses(Request $request)
+    {
+        return $this->productService->storeLenses($request);
+    }
+
+    public function storeFrame(Request $request)
+    {
+        return $this->productService->storeFrame($request);
     }
 
     public function getKidsProduct(FilterProduct $filterProduct)
@@ -40,12 +50,12 @@ class ProductController extends Controller
 
     public function getMenProduct(FilterProduct $filterProduct)
     {
-        return $filterProduct->getKidsProduct();
+        return $filterProduct->getMenProduct();
     }
 
     public function getWomenProduct(FilterProduct $filterProduct)
     {
-        return $filterProduct->getKidsProduct();
+        return $filterProduct->getWomenProduct();
     }
 
     public function searchProduct(FilterProduct $filterProduct, $numberModel)
@@ -53,9 +63,9 @@ class ProductController extends Controller
         return $filterProduct->searchProduct($numberModel);
     }
 
-    public function getBorderProducts(FilterProduct $filterProduct)
+    public function getFrameProducts(FilterProduct $filterProduct)
     {
-        return $filterProduct->getBorderProducts();
+        return $filterProduct->getFrameProducts();
     }
 
     public function getDevicesProducts(FilterProduct $filterProduct)
@@ -63,9 +73,9 @@ class ProductController extends Controller
         return $filterProduct->getDevicesProducts();
     }
 
-    public function getGlassesProducts(FilterProduct $filterProduct)
+    public function getLensesProducts(FilterProduct $filterProduct)
     {
-        return $filterProduct->getGlassesProducts();
+        return $filterProduct->getLensesProducts();
     }
 
     public function getOneImageProduct($id)

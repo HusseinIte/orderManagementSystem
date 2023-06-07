@@ -7,18 +7,18 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProductResource extends JsonResource
 {
-    public function setAttributes($attributes)
+    public function setAttributes()
     {
-        $attributes = $attributes->map(function ($attribute) {
-            return [
-                $attribute->productAttribute => $attribute->productValue,
-            ];
-        });
-        $mergedArray = array();
-        foreach ($attributes as $subArray) {
-            $mergedArray = array_merge($mergedArray, $subArray);
-        }
-        return $mergedArray;
+        $category=$this->category;
+     if($category->name=="عدسات"){
+         return $this->lensesAttribute;
+     }
+     elseif ($category->name=="إطارات"){
+         return $this->frameAttribute;
+     }
+     else{
+         return $this->deviceAttribute;
+     }
     }
 
     public function setImages($images)
@@ -44,7 +44,7 @@ class ProductResource extends JsonResource
             'amount' => $this->amount,
             'price' => $this->price,
             'images' => $this->setImages($this->images),
-            'attribute' => $this->setAttributes($this->attributes)
+            'attribute' => $this->setAttributes()
         ];
     }
 }

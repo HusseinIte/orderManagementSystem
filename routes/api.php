@@ -50,7 +50,9 @@ Route::middleware('auth:api')->group(function () {
 //    --------------  Route Product --------------
 
     Route::prefix('product')->group(function () {
-        Route::post('store', [ProductController::class, 'storeProduct']);
+        Route::post('storeFrame', [ProductController::class, 'storeFrame']);
+        Route::post('storeLenses', [ProductController::class, 'storeLenses']);
+        Route::post('storeDevice', [ProductController::class, 'storeDevice']);
     });
 //    ------------ Route Order  ----------------------------
 //    Route::prefix('order')->group(function () {
@@ -73,6 +75,9 @@ Route::prefix('product')->group(function () {
     Route::get('getKidsProduct', [ProductController::class, 'getKidsProduct']);
     Route::get('getMenProduct', [ProductController::class, 'getMenProduct']);
     Route::get('getWomenProduct', [ProductController::class, 'getWomenProduct']);
+    Route::get('getFrameProducts', [ProductController::class, 'getFrameProducts']);
+    Route::get('getDevicesProducts', [ProductController::class, 'getDevicesProducts']);
+    Route::get('getLensesProducts', [ProductController::class, 'getLensesProducts']);
     Route::get('searchProduct/{numberModel}', [ProductController::class, 'searchProduct']);
 });
 

@@ -26,9 +26,19 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function attributes()
+    public function frameAttribute()
     {
-        return $this->hasMany(ProductAttribute::class);
+        return $this->hasOne(FrameAttribute::class);
+    }
+
+    public function lensesAttribute()
+    {
+        return $this->hasOne(LensesAttribute::class);
+    }
+
+    public function deviceAttribute()
+    {
+        return $this->hasOne(DeviceAttribute::class);
     }
 
     public function images()

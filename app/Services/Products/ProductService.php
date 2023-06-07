@@ -6,6 +6,9 @@ namespace App\Services\Products;
 
 use App\Http\Resources\Product\ProductCollection;
 use App\Http\Resources\Product\ProductResource;
+use App\Models\Product\DeviceAttribute;
+use App\Models\Product\FrameAttribute;
+use App\Models\Product\LensesAttribute;
 use App\Models\Product\Product;
 use App\Models\Product\ProductAttribute;
 use App\Services\ImageService;
@@ -40,37 +43,94 @@ class ProductService
         return $image->path;
     }
 
-    public function storeProduct(Request $request)
+    public function storeProduct($data, $category_id)
     {
-        $jsonData = $request->input('data');
-        $data = json_decode($jsonData);
         $product = Product::create([
-            'category_id' => $data->category_id,
+            'category_id' => $category_id,
             'numberModel' => $data->numberModel,
             'manufactureCompany' => $data->manufactureCompany,
             'amount' => $data->amount,
             'price' => $data->price,
             'alertAmount' => $data->alertAmount,
         ]);
-        $this->imageService->uploadProductImage($request, $product->id);
-        $this->storeAttributes($data, $product->id);
-        return response()->json([
-            'status' => 'success',
-            'message' => 'تم حفظ المنتج بنجاح '
+        return $product;
+    }
+
+    public function storeFrameAttributes($data, $product_id)
+    {
+        return FrameAttribute::create([
+            'product_id' => $product_id,
+            'frameType' => $data->frameType,
+            'size' => $data->size,
+            'arm' => $data->arm,
+            'bridge' => $data->bridge,
+            'frameShape' => $data->frameShape,
+            'frameClass' => $data->frameClass,
+            'color' => $data->color
         ]);
 
     }
 
-    public function storeAttributes($data, $id)
+    public function storeDeviceAttributes($data, $product_id)
     {
-        $attributes = $data->attributes;
-        foreach ($attributes as $key => $value) {
-            ProductAttribute::create([
-                'product_id' => $id,
-                'productAttribute' => $key,
-                'productValue' => $value
-            ]);
-        }
+        return DeviceAttribute::create([
+            'product_id' => $product_id,
+            'details' => $data->details
+        ]);
+
+    }
+
+    public function storeLensesAttributes($data, $product_id)
+    {
+        return LensesAttribute::create([
+            'product_id' => $product_id,
+            'spherical' => $data->spherical,
+            'cylinder' => $data->cylinder,
+            'lensesClass' => $data->lensesClass,
+            'classType' => $data->classType
+        ]);
+
+    }
+
+    public function storeDevice(Request $request)
+    {
+        $jsonData = $request->input('data');
+        $data = json_decode($jsonData);
+        $product = $this->storeProduct($data, 2);
+        $this->storeDeviceAttributes($data, $product->id);
+        $this->imageService->uploadProductImage($request, $product->id);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'تم حفظ الجهاز بنجاح '
+        ]);
+
+    }
+
+    public function storeLenses(Request $request)
+    {
+
+        $jsonData = $request->input('data');
+        $data = json_decode($jsonData);
+        $product = $this->storeProduct($data, 3);
+        $this->storeLensesAttributes($data, $product->id);
+        $this->imageService->uploadProductImage($request, $product->id);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'تم حفظ العدسة بنجاح '
+        ]);
+    }
+
+    public function storeFrame(Request $request)
+    {
+        $jsonData = $request->input('data');
+        $data = json_decode($jsonData);
+        $product = $this->storeProduct($data, 1);
+        $this->storeFrameAttributes($data, $product->id);
+        $this->imageService->uploadProductImage($request, $product->id);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'تم حفظ الإطار بنجاح '
+        ]);
     }
 
 }

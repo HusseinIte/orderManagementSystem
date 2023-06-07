@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('category_attributes', function (Blueprint $table) {
+        Schema::create('lenses_attributes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->constrained('categories');
-            $table->string('name');
+            $table->foreignId('product_id')->constrained('products');
+            $table->string('spherical');
+            $table->string('cylinder');
+            $table->string('lensesClass');
+            $table->string('classType');
             $table->timestamps();
         });
     }
@@ -24,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('category_attributes');
+        Schema::dropIfExists('lenses_attributes');
     }
 };

@@ -14,7 +14,8 @@
 
 @section('content')
     <!-- TABLE: LATEST ORDERS -->
-    <div class="card">
+    <div class="card" id="app">
+        <example-component></example-component>
         <div class="card-header border-transparent">
             <h3 class="card-title">Latest Orders</h3>
 
@@ -61,12 +62,12 @@
         <!-- /.card-body -->
     </div>
     <!-- /.card -->
-    </div>
+
     <!-- /.col -->
 @endsection
 
-{{--@section('script')--}}
-{{--    <script src="{{ asset('js/app.js') }}"></script>--}}
+@section('script')
+    <script src="{{ asset('js/app.js') }}"></script>
 {{--    <script src="{{ asset('vendor/websockets/socket.io.js') }}"></script>--}}
 {{--    <script src="{{ asset('js/bootstrap.js') }}"></script>--}}
 {{--    <script>--}}
@@ -90,6 +91,6 @@
 {{--                $('#orders-table').DataTable().ajax.reload();--}}
 {{--            });--}}
 {{--    </script>--}}
-{{--@endsection--}}
+@endsection
 
 
