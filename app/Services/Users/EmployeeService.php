@@ -20,17 +20,21 @@ class EmployeeService
 
     public function index()
     {
-        return view('admin.employee.index');
+        $employees=Employee::all();
+        return view('admin.employee.index',['employees'=>$employees]);
     }
 
     public function createEmployee()
     {
         return view('admin.employee.create');
     }
-
+    public function editEmployee()
+    {
+        return view('admin.employee.edit');
+    }
     public function storeEmployee(Request $request)
     {
-        $user_type = $request->user_type;
+        $user_type = $request->user_type_id;
         $user = $this->user->storeUser($request, $user_type);
         $employee = Employee::create([
             'user_id' => $user->id,

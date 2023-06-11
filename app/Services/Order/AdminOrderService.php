@@ -13,9 +13,15 @@ class AdminOrderService
 {
     public function index()
     {
-
         $orders = Order::all();
         return view('admin.order.index', ['orders' => $orders]);
+    }
+
+    public function getOrderDetails($id)
+    {
+        $order = Order::find($id);
+        $items=$order->orderItems;
+        return view('admin.order.order_details', ['order' => $order,'items'=>$items]);
     }
 
     public function getAllOrder()

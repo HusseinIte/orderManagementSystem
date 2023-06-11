@@ -24,6 +24,10 @@ class CartService
             'quantity' => $request->quantity
         ]);
         $this->updateTotalPriceCart($cartItem);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'تم إضافة المنتج إلى السلة'
+        ]);
     }
 
     public function updateTotalPriceCart(CartItem $cartItem)

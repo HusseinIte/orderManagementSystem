@@ -25,6 +25,11 @@ class EmployeeController extends Controller
         return $this->employeeService->createEmployee();
     }
 
+    public function editEmployee()
+    {
+        return $this->employeeService->editEmployee();
+    }
+
     public function storeEmployee(Request $request)
     {
         $this->employeeService->storeEmployee($request);

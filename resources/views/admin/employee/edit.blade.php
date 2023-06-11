@@ -1,23 +1,23 @@
 @extends('layouts.admin')
 
 @section('title')
-    إضافة موظف
+    تعديل موظف
 @endsection
 
 @section('contentheader')
-    إضافة موظف
+    تعديل موظف
 @endsection
 @section('contentheaderlink')
     <a href="{{route('admin.employee.index')}}">الموظفين</a>
 @endsection
 
 @section('contentheaderactive')
-    إضافة
+    تعديل
 @endsection
 @section('content')
     <div class="card card-secondary col-8" style="padding:0;">
         <div class="card-header">
-            <h3 class="card-title float-left">إضافة موظف</h3>
+            <h3 class="card-title float-left">تعديل موظف</h3>
         </div>
         <!-- /.card-header -->
         <!-- form start -->
@@ -61,7 +61,7 @@
             <!-- /.card-body -->
 
             <div class="card-footer text-center">
-                <button type="submit" class="btn btn-secondary">إضافة</button>
+                <button type="submit" class="btn btn-secondary">تعديل</button>
             </div>
         </form>
     </div>

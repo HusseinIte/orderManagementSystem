@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Image\ImageController;
 use App\Http\Controllers\Order\CustomerOrderController;
+use App\Http\Controllers\Order\DeliveryOrderController;
 use App\Http\Controllers\Order\WarehouseOrderController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Shopping\CartController;
@@ -81,8 +82,8 @@ Route::prefix('product')->group(function () {
     Route::get('searchProduct/{numberModel}', [ProductController::class, 'searchProduct']);
 });
 
-Route::prefix('images')->group(function () {
-    Route::get('images/{filename}', [ImageController::class, 'showImage'])->name('image.show');
-});
+
+Route::get('images/{filename}', [ImageController::class, 'showImage'])->name('image.show')->where('filename', '.*');;
+Route::get('ProductImage/{id}', [ProductController::class, 'getOneImageProduct'])->name('ProductImage');
 
 

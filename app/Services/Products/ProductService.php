@@ -25,11 +25,6 @@ class ProductService
         $this->imageService = $imageService;
     }
 
-    public function index()
-    {
-        return view('admin.product.index');
-    }
-
     public function getAllProduct()
     {
 
@@ -40,7 +35,8 @@ class ProductService
     {
         $product = Product::find($id);
         $image = $product->images->first();
-        return $image->path;
+        return $this->imageService->showImage($image->path);
+
     }
 
     public function storeProduct($data, $category_id)

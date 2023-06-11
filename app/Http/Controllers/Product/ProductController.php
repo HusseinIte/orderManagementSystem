@@ -18,11 +18,6 @@ class ProductController extends Controller
         $this->productService = $productService;
     }
 
-    public function index()
-    {
-        return $this->productService->index();
-    }
-
     public function getAllProduct()
     {
         return $this->productService->getAllProduct();

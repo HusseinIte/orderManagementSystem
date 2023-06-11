@@ -39,6 +39,7 @@
                         <th>نوع الطلب</th>
                         <th>تكلفة الطلب</th>
                         <th>حالة الطلب</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -51,7 +52,13 @@
                                 <div class="sparkbar" data-color="#00a65a" data-height="20">{{$order->totalPrice}}</div>
                             </td>
                             <td><span class="badge badge-success orderStatus">{{$order->orderStatus}}</span></td>
+                            <td>
+                                <a href="{{route('admin.order.details',$order->id)}}"
+                                   class="btn btn-block btn-secondary">تفاصيل</a>
+
+                            </td>
                         </tr>
+
                     @endforeach
 
                     </tbody>
@@ -67,30 +74,11 @@
 @endsection
 
 @section('script')
-    <script src="{{ asset('js/app.js') }}"></script>
-{{--    <script src="{{ asset('vendor/websockets/socket.io.js') }}"></script>--}}
-{{--    <script src="{{ asset('js/bootstrap.js') }}"></script>--}}
-{{--    <script>--}}
-{{--        var ordersTable = document.querySelector('#orders-table');--}}
-{{--        window.Echo.channel('orders')--}}
-{{--            .listen('SendOrder', (e) => {--}}
-{{--                // // Find the row in the table corresponding to the updated user--}}
-{{--                // var row = ordersTable.querySelector('tr[data-id="' + e.order.id + '"]');--}}
-{{--                // // Update the row with the new order data--}}
-{{--                // row.querySelector('.orderStatus').textContent = e.order.orderStatus;--}}
-{{--                // $('#orders-table').DataTable().ajax.reload();--}}
-{{--                // location.reload();--}}
-{{--                console.log(e.message)--}}
-{{--            })--}}
-{{--            .listen('ExecuteOrder', (e) => {--}}
-{{--                // Find the row in the table corresponding to the updated order--}}
-{{--                var row = ordersTable.querySelector('tr[data-id="' + e.order.orderStatus + '"]');--}}
-
-{{--                // Update the row with the new order data--}}
-{{--                // row.querySelector('.orderStatus').textContent = e.order.orderStatus;--}}
-{{--                $('#orders-table').DataTable().ajax.reload();--}}
-{{--            });--}}
-{{--    </script>--}}
+    <script>
+        Echo.channel('orders').listen('SendOrder', (e) => {
+            console.log(e.order.orderStatus);
+        });
+    </script>
 @endsection
 
 

@@ -23,7 +23,8 @@ class CustomerService
 
     public function index()
     {
-        return view('admin.customer.index');
+        $customers = Customer::all();
+        return view('admin.customer.index', ['customers' => $customers]);
     }
 
     public function storeCustomer(Request $request, $user)

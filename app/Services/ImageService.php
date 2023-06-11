@@ -45,7 +45,7 @@ class ImageService
 
     public function showImage($filename)
     {
-        $path = storage_path('app/public/images/' . $filename);
+        $path = storage_path('app/public/' . $filename);
         return response()->file($path);
     }
 }

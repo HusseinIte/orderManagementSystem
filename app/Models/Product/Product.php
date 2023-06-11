@@ -30,7 +30,6 @@ class Product extends Model
     {
         return $this->hasOne(FrameAttribute::class);
     }
-
     public function lensesAttribute()
     {
         return $this->hasOne(LensesAttribute::class);

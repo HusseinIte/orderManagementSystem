@@ -27,10 +27,5 @@ class SendOrder implements ShouldBroadcast
         return new Channel('orders');
     }
 
-    public function broadcastWith()
-    {
-        return [
-            'message' => 'Hello Socket',
-        ];
-    }
+
 }

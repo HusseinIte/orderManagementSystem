@@ -4,22 +4,19 @@
     <meta charset="UTF-8">
     <title>Example</title>
 </head>
-<script src="{{asset('js/app.js ')}}">
-
-</script>
 
 <body>
 <p>
     <b>Message:-</b><span id="message-date"></span>
 </p>
 
+<script src="{{asset('js/app.js ')}}"></script>
 <script>
+    Echo.channel('home').listen('NewMessage', (data) => {
+        document.getElementById('message-date').innerHTML=data.message;
+    });
 
-    // require('laravel-echo');
-
-    // Echo.channel('home').listen('NewMessage', (e) => {
-    //     console.log(e.message);
-    // });
 </script>
+
 </body>
 </html>

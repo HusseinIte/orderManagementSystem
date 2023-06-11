@@ -27,7 +27,7 @@ class MoveOrderToDelivery
         $order = $event->order;
         $order->departments()->attach(2, ['isExecute' => 0]);
         $department->orders()->updateExistingPivot($order->id, [
-            'isExecute' => true,
+            'isExecute' => 1,
         ]);
         $order->orderStatus = "الطلب جاهز في المستودع";
         $order->save();

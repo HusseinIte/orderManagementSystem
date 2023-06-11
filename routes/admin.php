@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Offer\OfferController;
 use App\Http\Controllers\Order\AdminOrderController;
+use App\Http\Controllers\Product\AdminProductController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\User\AdminController;
 use App\Http\Controllers\User\AuthAdminController;
@@ -20,19 +21,24 @@ Route::middleware('auth:admin')->group(function () {
     Route::prefix('employee')->group(function () {
         Route::get('/', [EmployeeController::class, 'index'])->name('admin.employee.index');
         Route::get('/create', [EmployeeController::class, 'createEmployee'])->name('admin.employee.create');
+        Route::get('/edit', [EmployeeController::class, 'editEmployee'])->name('admin.employee.edit');
         Route::post('store', [EmployeeController::class, 'storeEmployee'])->name('admin.employee.store');
     });
     Route::prefix('customer')->group(function () {
         Route::get('/', [CustomerController::class, 'index'])->name('admin.customer.index');
     });
     Route::prefix('Product')->group(function () {
-        Route::get('/', [ProductController::class, 'index'])->name('admin.product.index');
+        Route::get('/', [AdminProductController::class, 'index'])->name('admin.product.index');
+        Route::get('details/{id}', [AdminProductController::class, 'getProductDetails'])->name('admin.product.details');
     });
+
     Route::prefix('offer')->group(function () {
         Route::get('/', [OfferController::class, 'index'])->name('admin.offer.index');
     });
     Route::prefix('order')->group(function () {
         Route::get('/', [AdminOrderController::class, 'index'])->name('admin.order.index');
+        Route::get('details/{id}', [AdminOrderController::class, 'getOrderDetails'])->name('admin.order.details');
+
     });
 });
 Route::group(['middleware' => 'guest:admin'], function () {
@@ -41,7 +47,7 @@ Route::group(['middleware' => 'guest:admin'], function () {
 });
 
 //    ------------ Route Order  ----------------------------
-    Route::prefix('order')->group(function () {
-        Route::get('allOrder', [AdminOrderController::class, 'getAllOrder']);
-    });
+Route::prefix('order')->group(function () {
+    Route::get('allOrder', [AdminOrderController::class, 'getAllOrder']);
+});
 
