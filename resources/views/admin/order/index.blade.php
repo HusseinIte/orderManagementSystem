@@ -76,7 +76,7 @@
 @section('script')
     <script>
         Echo.channel('orders').listen('SendOrder', (e) => {
-            console.log(e.order.orderStatus);
+            location.reload();
         });
     </script>
 @endsection

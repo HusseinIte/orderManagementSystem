@@ -30,9 +30,9 @@ class CustomerOrderService
         $user = User::find(Auth::id());
         $customer = $user->customer;
         $cart = $user->cart;
-        $order = Order::create([
+        $order = Order::firstOrCreate([
             'customer_id' => $customer->id,
-            'orderStatus' => 'جاري المعالجة',
+            'orderStatus' => 'الطلب قيد الإنتظار في المستودع',
             'orderType' => 'شراء',
             'totalPrice' => $cart->totalPrice
         ]);
@@ -44,7 +44,7 @@ class CustomerOrderService
     {
         $cartItems = $cart->cartItems;
         foreach ($cartItems as $item) {
-            OrderItem::create([
+            OrderItem::firstOrCreate([
                 'order_id' => $id,
                 'product_id' => $item->product_id,
                 'quantity' => $item->quantity
