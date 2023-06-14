@@ -9,27 +9,23 @@ use App\Http\Resources\OrderCollection;
 use App\Models\Order\Order;
 use App\Models\Order\OrderItem;
 use App\Models\Shopping\Cart;
-use App\Models\Shopping\CartItem;
 use App\Models\User\User;
-use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use function Monolog\error;
 
 class CustomerOrderService
 {
     public function getMyOrder()
     {
         $customer = User::find(Auth::id())->customer;
-        $orders= $customer->orders;
+        $orders = $customer->orders;
         return new OrderCollection($orders);
 
     }
 
-    public function createOrder(Request $request)
+    public function createOrder($cart, $customer)
     {
-        $user = User::find(Auth::id());
-        $customer = $user->customer;
-        $cart = $user->cart;
         $order = Order::firstOrCreate([
             'customer_id' => $customer->id,
             'orderStatus' => 'الطلب قيد الإنتظار في المستودع',
@@ -40,7 +36,7 @@ class CustomerOrderService
         return $order;
     }
 
-    public function storeOrderItem(Cart $cart, $id)
+    public function storeOrderItem($cart, $id)
     {
         $cartItems = $cart->cartItems;
         foreach ($cartItems as $item) {
@@ -55,12 +51,38 @@ class CustomerOrderService
 // send order from user to warehouse
     public function sendOrder(Request $request)
     {
-        $order = $this->createOrder($request);
+        $user = User::find(Auth::id());
+        $customer = $user->customer;
+        $cart = $user->cart;
+        $process = $this->processingOrder($cart);
+        if ($process['status'] == "error") {
+            return $process;
+        }
+        $order = $this->createOrder($cart, $customer);
         SendOrder::dispatch($order);
         return response()->json([
             'status' => 'success',
             'message' => 'تم إرسال الطلب بنجاح'
         ]);
+
+    }
+
+// processing order before create
+    public function processingOrder($cart)
+    {
+        $cartItems = $cart->cartItems;
+        foreach ($cartItems as $item) {
+            $product = $item->product;
+            if ($item->quantity > $product->amount) {
+                return [
+                    'status' => 'error',
+                    'message' => 'this is overstock order reduce quantity for item :' . $item->id
+                ];
+            }
+        }
+        return [
+            'status' => 'success',
+        ];
     }
 
 }

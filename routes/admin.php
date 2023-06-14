@@ -3,7 +3,6 @@
 use App\Http\Controllers\Offer\OfferController;
 use App\Http\Controllers\Order\AdminOrderController;
 use App\Http\Controllers\Product\AdminProductController;
-use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\User\AdminController;
 use App\Http\Controllers\User\AuthAdminController;
 use App\Http\Controllers\User\CustomerController;
@@ -21,7 +20,8 @@ Route::middleware('auth:admin')->group(function () {
     Route::prefix('employee')->group(function () {
         Route::get('/', [EmployeeController::class, 'index'])->name('admin.employee.index');
         Route::get('/create', [EmployeeController::class, 'createEmployee'])->name('admin.employee.create');
-        Route::get('/edit', [EmployeeController::class, 'editEmployee'])->name('admin.employee.edit');
+        Route::get('/edit/{id}', [EmployeeController::class, 'editEmployee'])->name('admin.employee.edit');
+        Route::post('/update/{id}', [EmployeeController::class, 'updateEmployee'])->name('admin.employee.update');
         Route::post('store', [EmployeeController::class, 'storeEmployee'])->name('admin.employee.store');
     });
     Route::prefix('customer')->group(function () {

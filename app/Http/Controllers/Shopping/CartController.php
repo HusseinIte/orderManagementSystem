@@ -15,9 +15,19 @@ class CartController extends Controller
         $this->cartService = $cartService;
     }
 
-    public function addToCart(Request $request)
+    public function getCartItem()
     {
-        return $this->cartService->addToCart($request);
+        return $this->cartService->getCartItem();
+    }
+
+    public function addToCart($id)
+    {
+        return $this->cartService->addToCart($id);
+    }
+
+    public function addLensesToCart(Request $request)
+    {
+        return $this->cartService->addLensesToCart($request);
     }
 
 // parameter : id for cart Item

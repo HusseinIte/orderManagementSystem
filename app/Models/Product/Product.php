@@ -9,6 +9,40 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use function League\Flysystem\has;
 
+/**
+ * App\Models\Product\Product
+ *
+ * @property int $id
+ * @property int $category_id
+ * @property string $numberModel
+ * @property string $manufactureCompany
+ * @property int $amount
+ * @property float $price
+ * @property int $alertAmount
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read CartItem|null $cartItem
+ * @property-read Category $category
+ * @property-read \App\Models\Product\DeviceAttribute|null $deviceAttribute
+ * @property-read \App\Models\Product\FrameAttribute|null $frameAttribute
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Product\ProductImage> $images
+ * @property-read int|null $images_count
+ * @property-read \App\Models\Product\LensesAttribute|null $lensesAttribute
+ * @property-read OrderItem|null $orderItem
+ * @method static \Illuminate\Database\Eloquent\Builder|Product newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Product newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Product query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereAlertAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereCategoryId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereManufactureCompany($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereNumberModel($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product wherePrice($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class Product extends Model
 {
     use HasFactory;

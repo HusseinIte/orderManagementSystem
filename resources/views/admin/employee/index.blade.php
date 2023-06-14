@@ -37,7 +37,7 @@
                             <td>{{$employee->user->userType->type}}</td>
                             <td>{{$employee->user->email}}</td>
                             <td>
-                                <a href="{{route('admin.employee.edit')}}" class="btn btn-app btn-sm"><i
+                                <a href="{{route('admin.employee.edit',$employee->id)}}" class="btn btn-app btn-sm"><i
                                         class="fas fa-edit"></i>تعديل</a>
                             </td>
                         </tr>

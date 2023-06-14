@@ -24,12 +24,13 @@ use Illuminate\Support\Facades\Route;
 */
 // Route with authentication
 Route::middleware('auth:api')->group(function () {
-
+    Route::get('/logout', [UserController::class, 'logout']);
     // ------- Route Customer ------------
     Route::prefix('customer')->group(function () {
-        Route::get('/logout', [UserController::class, 'logout']);
+        Route::post('/addToCart/{id}', [CartController::class, 'addToCart']);
+        Route::get('getCartItem', [CartController::class, 'getCartItem']);
+        Route::post('/addLensesToCart', [CartController::class, 'addLensesToCart']);
         Route::get('getMyInformation', [CustomerController::class, 'getMyInformation']);
-        Route::post('/addToCart', [CartController::class, 'addToCart']);
         Route::get('getMyOrder', [CustomerOrderController::class, 'getMyOrder']);
         Route::post('sendOrder', [CustomerOrderController::class, 'sendOrder']);
     });
@@ -66,7 +67,6 @@ Route::middleware('auth:api')->group(function () {
 //    --------------  Route Customer --------------
 Route::prefix('customer')->group(function () {
     Route::post('register', [CustomerController::class, 'register']);
-    Route::post('login', [UserController::class, 'login']);
 });
 
 //    --------------  Route Product --------------
@@ -82,7 +82,7 @@ Route::prefix('product')->group(function () {
     Route::get('searchProduct/{numberModel}', [ProductController::class, 'searchProduct']);
 });
 
-
+Route::post('login', [UserController::class, 'login']);
 Route::get('images/{filename}', [ImageController::class, 'showImage'])->name('image.show')->where('filename', '.*');;
 Route::get('ProductImage/{id}', [ProductController::class, 'getOneImageProduct'])->name('ProductImage');
 

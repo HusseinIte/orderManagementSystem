@@ -75,8 +75,9 @@
 
 @section('script')
     <script>
-        Echo.channel('orders').listen('SendOrder', (e) => {
+        Echo.channel('orders').listen('SendOrder', (data) => {
             location.reload();
+            // $('#orders-table').html(data.order);
         });
     </script>
 @endsection

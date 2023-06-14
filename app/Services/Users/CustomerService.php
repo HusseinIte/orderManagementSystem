@@ -8,6 +8,7 @@ use App\Http\Resources\CustomerResource;
 use App\Http\Resources\UserResource;
 use App\Models\Shopping\Cart;
 use App\Models\User\Customer;
+use App\Notifications\EmailVerificationNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -51,6 +52,7 @@ class CustomerService
         ]);
         $token = Auth::login($user);
         $customer = $this->storeCustomer($request, $user);
+//        $user->notify(new EmailVerificationNotification);
         return response()->json([
             'status' => 'success',
             'message' => 'User created successfully',

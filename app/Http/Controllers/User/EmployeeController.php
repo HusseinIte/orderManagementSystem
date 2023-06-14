@@ -25,9 +25,9 @@ class EmployeeController extends Controller
         return $this->employeeService->createEmployee();
     }
 
-    public function editEmployee()
+    public function editEmployee($id)
     {
-        return $this->employeeService->editEmployee();
+        return $this->employeeService->editEmployee($id);
     }
 
     public function storeEmployee(Request $request)
@@ -35,4 +35,10 @@ class EmployeeController extends Controller
         $this->employeeService->storeEmployee($request);
 
     }
+
+    public function updateEmployee(Request $request, $id)
+    {
+        return $this->employeeService->updateEmployee($request, $id);
+    }
+
 }

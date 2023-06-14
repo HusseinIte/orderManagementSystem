@@ -4,7 +4,8 @@
 namespace App\Services\Shopping;
 
 
-use App\Models\Product\Product;
+use App\Http\Resources\Product\CartItemResourse;
+use App\Models\Product\LensesAttribute;
 use App\Models\Shopping\CartItem;
 use App\Models\Shopping\ShoppingSession;
 use App\Models\User\User;
@@ -14,20 +15,10 @@ use Illuminate\Support\Facades\Auth;
 
 class CartService
 {
-
-    public function addToCart(Request $request)
+    public function getCartForUser()
     {
-        $cart = $this->getCartForUser();
-        $cartItem = CartItem::create([
-            'product_id' => $request->product_id,
-            'cart_id' => $cart->id,
-            'quantity' => $request->quantity
-        ]);
-        $this->updateTotalPriceCart($cartItem);
-        return response()->json([
-            'status' => 'success',
-            'message' => 'تم إضافة المنتج إلى السلة'
-        ]);
+        $user = Auth::user();
+        return $user->cart;
     }
 
     public function updateTotalPriceCart(CartItem $cartItem)
@@ -38,6 +29,67 @@ class CartService
         $cart->totalPrice = $oldTotal + ($cartItem->quantity * $product->price);
         $cart->save();
     }
+
+    public function addToCart($id)
+    {
+        $cart = $this->getCartForUser();
+        $cartItem = CartItem::Create([
+            'product_id' => $id,
+            'cart_id' => $cart->id,
+            'quantity'=>1
+        ]);
+        $this->updateTotalPriceCart($cartItem);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'تم إضافة المنتج إلى السلة'
+        ]);
+    }
+
+    public function getCartItem()
+    {
+        $cart = $this->getCartForUser();
+        return response()->json([
+            'status' => 'success',
+            'totalPrice' => $cart->totalPrice,
+            'Item' => CartItemResourse::collection($cart->cartItems)
+        ]);
+    }
+
+    public function getLensesToAddCart(Request $request)
+    {
+        $lenses = LensesAttribute::where([
+            ['spherical', $request->spherical],
+            ['cylinder', $request->cylinder],
+            ['lensesClass', $request->lensesClass],
+            ['classType', $request->classType]])->get();
+
+        return $lenses;
+
+    }
+
+    public function addLensesToCart(Request $request)
+    {
+        $lensesProduct = $this->getLensesToAddCart($request);
+        if ($lensesProduct->isEmpty()) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'هذا المنتج غير موجود'
+            ]);
+        }
+        $cart = $this->getCartForUser();
+        $cartItem = CartItem::create([
+            'product_id' => $lensesProduct->first()->id,
+            'cart_id' => $cart->id,
+            'quantity'=>1
+        ]);
+        $this->updateTotalPriceCart($cartItem);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'تم إضافة المنتج إلى السلة'
+        ]);
+
+    }
+
 
 // parameter : id for cart Item
     public function minusQuantityItem($id)
@@ -62,10 +114,5 @@ class CartService
         $this->updateTotalPriceCart($cart_item);
     }
 
-    public function getCartForUser()
-    {
-        $user = User::find(Auth::id());
-        return $user->cart;
-    }
 
 }

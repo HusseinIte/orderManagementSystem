@@ -21,41 +21,42 @@
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-        <form action="{{route('admin.employee.store')}}" method="post">
+        <form action="{{route('admin.employee.update',$employee->id)}}" method="post">
             @csrf
             <div class="card-body">
                 <div class="form-group">
                     <label for="firstName">الإسم الأول</label>
                     <input type="text" class="form-control" id="first_name" name="first_name"
-                           placeholder="الإسم الأول">
+                           placeholder="الإسم الأول" value="{{$employee->first_name}}">
                 </div>
                 <div class="form-group">
                     <label for="lastName">الإسم الأخير</label>
                     <input type="text" class="form-control" name="last_name" id="last_name"
-                           placeholder="الإسم الثاني">
+                           placeholder="الإسم الثاني" value="{{$employee->last_name}}">
                 </div>
                 <div class="form-group">
                     <label>نوع الموظف</label>
                     <select id="user_type_id" name="user_type_id" class="form-control">
-                        <option value="1">مستودع</option>
-                        <option value="2">عامل توصيل</option>
-                        <option value="3">صيانة</option>
+                        <option value="1" @if($employee->user->user_type_id ==1)selected @endif>مستودع</option>
+                        <option value="2" @if($employee->user->user_type_id ==2)selected @endif>عامل توصيل</option>
+                        <option value="3" @if($employee->user->user_type_id ==3)selected @endif>صيانة</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="InputEmail">البريد الإلكتروني</label>
-                    <input type="email" class="form-control" name="email" id="email" placeholder="أدخل الايميل">
+                    <input type="email" class="form-control" name="email" id="email" placeholder="أدخل الايميل"
+                           value="{{$employee->user->email}}">
                 </div>
                 <div class="form-group">
                     <label for="InputPassword">كلمة المرور</label>
                     <input type="password" class="form-control" id="password" name="password"
-                           placeholder="كلمة المرور">
+                           placeholder="كلمة المرور" value="{{($employee->user->password)}}">
                 </div>
                 <!-- textarea -->
                 <div class="form-group">
                     <label>ملاحظة</label>
                     <textarea id="note" name="note" class="form-control" rows="3"
-                              placeholder="أدخل ملاحظة ..."></textarea>
+                              placeholder="أدخل ملاحظة ..." value="{{$employee->note}}"></textarea>
                 </div>
             </div>
             <!-- /.card-body -->
