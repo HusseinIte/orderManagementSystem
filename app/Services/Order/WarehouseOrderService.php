@@ -10,6 +10,7 @@ use App\Models\Order\Department;
 use App\Models\Order\Order;
 use App\Models\Order\OrderDepartment;
 use http\Env\Request;
+use Illuminate\Database\QueryException;
 
 class WarehouseOrderService
 {
@@ -25,7 +26,7 @@ class WarehouseOrderService
         return $department->orders()->wherePivot('isExecute', 1);
     }
 
-    public function getNonExecutedOrder()
+    public function getNewOrder()
     {
         $department = Department::find(1);
         return $department->orders()->wherePivot('isExecute', 0);
@@ -49,7 +50,19 @@ class WarehouseOrderService
         $order = Order::find($id);
         $this->updateStock($order);
 //        $this->checkLevelStock($order);
-        ExecuteOrder::dispatch($order);
+        try {
+            ExecuteOrder::dispatch($order);
+        } catch (QueryException $e) {
+            $errorMessage = 'هذا الطلب منفذ';
+            return response()->json([
+                'status' => 'failed',
+                'message' => $errorMessage]);
+        }
+        return response()->json([
+            'status' => 'success',
+            'message' => 'تم تنفيذ الطلب بنجاح'
+        ]);
+
     }
 
     public function checkLevelStock(Order $order)

@@ -45,7 +45,13 @@
                 </tr>
                 <tr>
                     <th>حالة الطلب</th>
-                    <td>{{$order->orderStatus}}</td>
+                    <td><span class="badge @if($order->orderStatus=="الطلب قيد الإنتظار في المستودع")badge-info
+                                @elseif($order->orderStatus=="الطلب جاهز في المستودع") badge-warning
+                                  @elseif($order->orderStatus=="جاري شحن الطلب") badge-secondary
+                                 @elseif($order->orderStatus=="تم تسليم الطلب") badge-success
+                                 @endif">{{$order->orderStatus ."  "."بتاريخ"."  ". $order->updated_at}}</span>
+                    </td>
+
                 </tr>
                 <tr>
                     <th>قيمة الطلب</th>

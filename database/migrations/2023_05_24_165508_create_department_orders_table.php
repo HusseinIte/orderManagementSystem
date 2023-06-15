@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->foreignId('department_id')->constrained('departments');
             $table->foreignId('order_id')->constrained('orders');
             $table->boolean('isExecute')->default(0);
+            $table->unique(['department_id','order_id']);
             $table->timestamps();
         });
     }

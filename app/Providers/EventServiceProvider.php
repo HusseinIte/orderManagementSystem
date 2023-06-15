@@ -2,9 +2,13 @@
 
 namespace App\Providers;
 
+use App\Events\DeliverOrder;
 use App\Events\ExecuteOrder;
+use App\Events\ReceiveOrderByDelivery;
 use App\Events\SendOrder;
 use App\Listeners\ChangeOrderStatus;
+use App\Listeners\FinishOrderCycle;
+use App\Listeners\MoveOrderToCustomer;
 use App\Listeners\MoveOrderToDelivery;
 use App\Listeners\MoveOrderToWarehouse;
 use Illuminate\Auth\Events\Registered;
@@ -29,6 +33,12 @@ class EventServiceProvider extends ServiceProvider
         ExecuteOrder::class => [
             MoveOrderToDelivery::class,
         ],
+        ReceiveOrderByDelivery::class => [
+            MoveOrderToCustomer::class,
+        ],
+        DeliverOrder::class => [
+            FinishOrderCycle::class,
+        ]
 
     ];
 

@@ -27,10 +27,11 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/logout', [UserController::class, 'logout']);
     // ------- Route Customer ------------
     Route::prefix('customer')->group(function () {
+        Route::get('getMyInformation', [CustomerController::class, 'getMyInformation']);
+        Route::get('getCustomerDetails/{id}', [CustomerController::class, 'getCustomerDetails']);
         Route::post('/addToCart/{id}', [CartController::class, 'addToCart']);
         Route::get('getCartItem', [CartController::class, 'getCartItem']);
         Route::post('/addLensesToCart', [CartController::class, 'addLensesToCart']);
-        Route::get('getMyInformation', [CustomerController::class, 'getMyInformation']);
         Route::get('getMyOrder', [CustomerOrderController::class, 'getMyOrder']);
         Route::post('sendOrder', [CustomerOrderController::class, 'sendOrder']);
     });
@@ -44,6 +45,8 @@ Route::middleware('auth:api')->group(function () {
 //    ------------- Route Delivery ---------------
     Route::prefix('delivery')->group(function () {
         Route::get('allOrder', [DeliveryOrderController::class, 'getAllOrder']);
+        Route::get('receiveOrder/{id}', [DeliveryOrderController::class, 'receiveOrderFromWarehouse']);
+        Route::get('deliverOrder/{id}', [DeliveryOrderController::class, 'deliverOrderToCustomer']);
     });
 //    ------------- Route Maintenance ------------
     Route::prefix('maintenance')->group(function () {

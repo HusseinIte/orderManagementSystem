@@ -17,18 +17,28 @@ class DeliveryOrderController extends Controller
 
     public function getAllOrder()
     {
-       return $this->orderDeliveryService->getAllOrder();
+        return $this->orderDeliveryService->getAllOrder();
 
+    }
+
+    public function receiveOrderFromWarehouse($id)
+    {
+        return $this->orderDeliveryService->receiveOrderFromWarehouse($id);
+    }
+
+    public function deliverOrderToCustomer($id)
+    {
+        return $this->orderDeliveryService->deliverOrderToCustomer($id);
     }
 
     public function getExecutedOrder()
     {
-
+        return $this->orderDeliveryService->getExecutedOrder();
     }
 
-    public function getNonExecutedOrder()
+    public function getNewOrder()
     {
-
+        return $this->orderDeliveryService->getNewOrder();
     }
 
 }

@@ -12,6 +12,7 @@ use App\Models\Product\LensesAttribute;
 use App\Models\Product\Product;
 use App\Models\Product\ProductAttribute;
 use App\Services\ImageService;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use function Symfony\Component\Routing\Loader\Configurator\collection;
 use function Symfony\Component\Translation\t;
@@ -41,7 +42,7 @@ class ProductService
 
     public function storeProduct($data, $category_id)
     {
-        $product = Product::create([
+        return Product::create([
             'category_id' => $category_id,
             'numberModel' => $data->numberModel,
             'manufactureCompany' => $data->manufactureCompany,
@@ -49,7 +50,6 @@ class ProductService
             'price' => $data->price,
             'alertAmount' => $data->alertAmount,
         ]);
-        return $product;
     }
 
     public function storeFrameAttributes($data, $product_id)
@@ -92,7 +92,14 @@ class ProductService
     {
         $jsonData = $request->input('data');
         $data = json_decode($jsonData);
-        $product = $this->storeProduct($data, 2);
+        try {
+            $product = $this->storeProduct($data, 2);
+        } catch (QueryException $e) {
+            $errorMessage = 'هذا المنتج موجود بالفعل';
+            return response()->json([
+                'status' => 'failed',
+                'message' => $errorMessage]);
+        }
         $this->storeDeviceAttributes($data, $product->id);
         $this->imageService->uploadProductImage($request, $product->id);
         return response()->json([
@@ -107,7 +114,14 @@ class ProductService
 
         $jsonData = $request->input('data');
         $data = json_decode($jsonData);
-        $product = $this->storeProduct($data, 3);
+        try {
+            $product = $this->storeProduct($data, 3);
+        } catch (QueryException $e) {
+            $errorMessage = 'هذا المنتج موجود بالفعل';
+            return response()->json([
+                'status' => 'failed',
+                'message' => $errorMessage]);
+        }
         $this->storeLensesAttributes($data, $product->id);
         $this->imageService->uploadProductImage($request, $product->id);
         return response()->json([
@@ -120,7 +134,14 @@ class ProductService
     {
         $jsonData = $request->input('data');
         $data = json_decode($jsonData);
-        $product = $this->storeProduct($data, 1);
+        try {
+            $product = $this->storeProduct($data, 1);
+        } catch (QueryException $e) {
+            $errorMessage = 'هذا المنتج موجود بالفعل';
+            return response()->json([
+                'status' => 'failed',
+                'message' => $errorMessage]);
+        }
         $this->storeFrameAttributes($data, $product->id);
         $this->imageService->uploadProductImage($request, $product->id);
         return response()->json([

@@ -9,9 +9,13 @@ use App\Models\Product\LensesAttribute;
 use App\Models\Shopping\CartItem;
 use App\Models\Shopping\ShoppingSession;
 use App\Models\User\User;
-
+use Illuminate\Database\Events\TransactionBeginning;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use function Symfony\Component\HttpFoundation\Session\Storage\Handler\beginTransaction;
+use function Symfony\Component\HttpFoundation\Session\Storage\Handler\rollback;
 
 class CartService
 {
@@ -32,17 +36,27 @@ class CartService
 
     public function addToCart($id)
     {
+
         $cart = $this->getCartForUser();
-        $cartItem = CartItem::Create([
-            'product_id' => $id,
-            'cart_id' => $cart->id,
-            'quantity'=>1
-        ]);
+        try {
+            $cartItem = CartItem::create([
+                'product_id' => $id,
+                'cart_id' => $cart->id,
+                'quantity' => 1
+            ]);
+        } catch (QueryException $e) {
+            $errorMessage = 'هذا المنتج مضاف إلى السلة';
+            return response()->json([
+                'status' => 'failed',
+                'message' => $errorMessage]);
+        }
         $this->updateTotalPriceCart($cartItem);
         return response()->json([
             'status' => 'success',
             'message' => 'تم إضافة المنتج إلى السلة'
         ]);
+
+
     }
 
     public function getCartItem()
@@ -77,11 +91,20 @@ class CartService
             ]);
         }
         $cart = $this->getCartForUser();
-        $cartItem = CartItem::create([
-            'product_id' => $lensesProduct->first()->id,
-            'cart_id' => $cart->id,
-            'quantity'=>1
-        ]);
+        try {
+
+            $cartItem = CartItem::create([
+                'product_id' => $lensesProduct->first()->id,
+                'cart_id' => $cart->id,
+                'quantity' => 1
+            ]);
+        } catch (QueryException $e) {
+            rollback();
+            $errorMessage = 'هذا المنتج مضاف إلى السلة';
+            return response()->json([
+                'status' => 'failed',
+                'message' => $errorMessage]);
+        }
         $this->updateTotalPriceCart($cartItem);
         return response()->json([
             'status' => 'success',

@@ -51,7 +51,12 @@
                             <td>
                                 <div class="sparkbar" data-color="#00a65a" data-height="20">{{$order->totalPrice}}</div>
                             </td>
-                            <td><span class="badge badge-success orderStatus">{{$order->orderStatus}}</span></td>
+                            <td><span class="badge @if($order->orderStatus=="الطلب قيد الإنتظار في المستودع")badge-info
+                                @elseif($order->orderStatus=="الطلب جاهز في المستودع") badge-warning
+                                  @elseif($order->orderStatus=="جاري شحن الطلب") badge-secondary
+                                 @elseif($order->orderStatus=="تم تسليم الطلب") badge-success
+                                 @endif">{{$order->orderStatus}}</span>
+                            </td>
                             <td>
                                 <a href="{{route('admin.order.details',$order->id)}}"
                                    class="btn btn-block btn-secondary">تفاصيل</a>
@@ -77,8 +82,16 @@
     <script>
         Echo.channel('orders').listen('SendOrder', (data) => {
             location.reload();
-            // $('#orders-table').html(data.order);
-        });
+        })
+            .listen('ExecuteOrder', (data) => {
+                location.reload();
+            })
+            .listen('ReceiveOrderByDelivery', (data) => {
+                location.reload();
+            })
+            .listen('DeliverOrder', (data) => {
+                location.reload();
+            });
     </script>
 @endsection
 

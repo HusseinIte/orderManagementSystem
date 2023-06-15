@@ -72,4 +72,17 @@ class CustomerService
             'MyProfile' => new CustomerResource($customer)
         ]);
     }
+
+//   show details for customer
+    public function getCustomerDetails($id)
+    {
+        return new CustomerResource(Customer::find($id));
+    }
+
+    public function viewCustomerDetails($id)
+    {
+        $customer = Customer::find($id);
+        return view('admin.customer.customer_details', ['customer' => $customer]);
+
+    }
 }

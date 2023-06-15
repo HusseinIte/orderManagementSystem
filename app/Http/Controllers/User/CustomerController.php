@@ -32,7 +32,17 @@ class CustomerController extends Controller
 
     public function getMyInformation()
     {
-       return $this->customerService->getMyInformation();
+        return $this->customerService->getMyInformation();
+    }
+
+    public function getCustomerDetails($id)
+    {
+        return $this->customerService->getCustomerDetails($id);
+    }
+
+    public function viewCustomerDetails($id)
+    {
+        return $this->customerService->viewCustomerDetails($id);
     }
 
 }

@@ -26,6 +26,7 @@ Route::middleware('auth:admin')->group(function () {
     });
     Route::prefix('customer')->group(function () {
         Route::get('/', [CustomerController::class, 'index'])->name('admin.customer.index');
+        Route::get('details/{id}', [CustomerController::class, 'viewCustomerDetails'])->name('admin.customer.details');
     });
     Route::prefix('Product')->group(function () {
         Route::get('/', [AdminProductController::class, 'index'])->name('admin.product.index');

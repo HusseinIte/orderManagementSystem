@@ -45,7 +45,10 @@ class CustomerOrderService
                 'product_id' => $item->product_id,
                 'quantity' => $item->quantity
             ]);
+            $item->delete();
         }
+        $cart->totalPrice = 0;
+        $cart->save();
     }
 
 // send order from user to warehouse
@@ -57,6 +60,12 @@ class CustomerOrderService
         $process = $this->processingOrder($cart);
         if ($process['status'] == "error") {
             return $process;
+        }
+        if ($cart->cartItems->isEmpty()) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'لايمكن إنشاء طلب من دون منتجات'
+            ]);
         }
         $order = $this->createOrder($cart, $customer);
         SendOrder::dispatch($order);

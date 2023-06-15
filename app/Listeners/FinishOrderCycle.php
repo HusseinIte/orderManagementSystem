@@ -2,14 +2,12 @@
 
 namespace App\Listeners;
 
-use App\Events\ExecuteOrder;
-use App\Events\SendOrder;
+use App\Events\DeliverOrder;
 use App\Models\Order\Department;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Database\QueryException;
 use Illuminate\Queue\InteractsWithQueue;
 
-class MoveOrderToDelivery
+class FinishOrderCycle
 {
     /**
      * Create the event listener.
@@ -22,17 +20,14 @@ class MoveOrderToDelivery
     /**
      * Handle the event.
      */
-    public function handle(ExecuteOrder $event): void
+    public function handle(DeliverOrder $event): void
     {
-        $department = Department::find(1);
+        $department = Department::find(2);
         $order = $event->order;
-        $order->departments()->attach(2, ['isExecute' => 0]);
         $department->orders()->updateExistingPivot($order->id, [
             'isExecute' => 1,
         ]);
-        $order->orderStatus = "الطلب جاهز في المستودع";
+        $order->orderStatus = "تم تسليم الطلب";
         $order->save();
-//        broadcast(new ExecuteOrder($order));
-
     }
 }

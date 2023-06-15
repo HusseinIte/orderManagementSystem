@@ -26,6 +26,7 @@
                         <th scope="col">الهاتف</th>
                         <th scope="col">العنوان</th>
                         <th scope="col"></th>
+                        <th scope="col"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -39,6 +40,10 @@
                             <td>{{$customer->address}}</td>
                             <td>
                                 <button type="button" class="btn btn-block btn-secondary">عرض الطلبات</button>
+                            </td>
+                            <td>
+                                <a href="{{route('admin.customer.details',$customer->id)}}"
+                                   class="btn btn-block btn-secondary">تفاصيل</a>
                             </td>
                         </tr>
                     @endforeach
