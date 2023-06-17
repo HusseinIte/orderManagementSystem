@@ -95,6 +95,8 @@ Route::prefix('product')->group(function () {
 
 Route::prefix('category')->group(function () {
     Route::get('/', [CategoryController::class, 'getCategory']);
+    Route::get('/{category}', [CategoryController::class, 'getProductByCategory']);
+    Route::get('/{category}/subCategory/{subCategory}', [CategoryController::class, 'getProductByCategoryAndSubCategory']);
 });
 
 Route::post('login', [UserController::class, 'login']);

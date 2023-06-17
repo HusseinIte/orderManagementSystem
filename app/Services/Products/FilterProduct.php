@@ -16,37 +16,37 @@ class FilterProduct
 
     public function getKidsProduct()
     {
-        $Frame=FrameAttribute::where('frameClass','أطفال')->get();
-        $menFrames=$Frame->map(function ($menFram){
+        $Frame = FrameAttribute::where('frameClass', 'أطفال')->get();
+        $menFrames = $Frame->map(function ($menFram) {
             return $menFram->product;
         });
         return response()->json([
             'status' => 'success',
-            'products' =>ProductResource::collection($menFrames)
+            'products' => ProductResource::collection($menFrames)
         ]);
     }
 
     public function getMenProduct()
     {
-        $Frame=FrameAttribute::where('frameClass','رجالي')->get();
-        $menFrames=$Frame->map(function ($menFram){
+        $Frame = FrameAttribute::where('frameClass', 'رجالي')->get();
+        $menFrames = $Frame->map(function ($menFram) {
             return $menFram->product;
         });
         return response()->json([
             'status' => 'success',
-            'products' =>ProductResource::collection($menFrames)
+            'products' => ProductResource::collection($menFrames)
         ]);
     }
 
     public function getWomenProduct()
     {
-        $Frame=FrameAttribute::where('frameClass','نسائي')->get();
-        $menFrames=$Frame->map(function ($menFram){
+        $Frame = FrameAttribute::where('frameClass', 'نسائي')->get();
+        $menFrames = $Frame->map(function ($menFram) {
             return $menFram->product;
         });
         return response()->json([
             'status' => 'success',
-            'products' =>ProductResource::collection($menFrames)
+            'products' => ProductResource::collection($menFrames)
         ]);
 
     }
@@ -88,4 +88,43 @@ class FilterProduct
         }
     }
 
+    public function getProductByCategory($category_id)
+    {
+        $category = Category::find($category_id);
+        $products = $category->products;
+        return ProductResource::collection($products);
+    }
+
+    public function getProductByCategoryAndSubCategory($category_id, $subCategory_id)
+    {
+        if ($subCategory_id == 1) {
+            $Frame = FrameAttribute::where('frameClass', 'رجالي')->get();
+            $menFrames = $Frame->map(function ($menFram) {
+                return $menFram->product;
+            });
+            return response()->json([
+                'status' => 'success',
+                'products' => ProductResource::collection($menFrames)
+            ]);
+        } elseif ($subCategory_id == 2) {
+            $Frame = FrameAttribute::where('frameClass', 'أطفال')->get();
+            $menFrames = $Frame->map(function ($menFram) {
+                return $menFram->product;
+            });
+            return response()->json([
+                'status' => 'success',
+                'products' => ProductResource::collection($menFrames)
+            ]);
+        } else {
+            $Frame = FrameAttribute::where('frameClass', 'نسائي')->get();
+            $menFrames = $Frame->map(function ($menFram) {
+                return $menFram->product;
+            });
+            return response()->json([
+                'status' => 'success',
+                'products' => ProductResource::collection($menFrames)
+            ]);
+        }
+
+    }
 }
