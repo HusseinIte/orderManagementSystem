@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\Image\ImageController;
 use App\Http\Controllers\Order\CustomerOrderController;
 use App\Http\Controllers\Order\DeliveryOrderController;
+use App\Http\Controllers\Order\OrderController;
 use App\Http\Controllers\Order\WarehouseOrderController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Shopping\CartController;
@@ -39,7 +41,7 @@ Route::middleware('auth:api')->group(function () {
     Route::prefix('warehouse')->group(function () {
         Route::get('allOrder', [WarehouseOrderController::class, 'getAllOrder']);
         Route::get('executedOrder', [WarehouseOrderController::class, 'getExecutedOrder']);
-        Route::get('nonExecutedOrder', [WarehouseOrderController::class, 'getNonExecutedOrder']);
+        Route::get('NewOrder', [WarehouseOrderController::class, 'getNewOrder']);
         Route::get('executeOrder/{id}', [WarehouseOrderController::class, 'executeOrder']);
     });
 //    ------------- Route Delivery ---------------
@@ -47,6 +49,9 @@ Route::middleware('auth:api')->group(function () {
         Route::get('allOrder', [DeliveryOrderController::class, 'getAllOrder']);
         Route::get('receiveOrder/{id}', [DeliveryOrderController::class, 'receiveOrderFromWarehouse']);
         Route::get('deliverOrder/{id}', [DeliveryOrderController::class, 'deliverOrderToCustomer']);
+        Route::get('executedOrder', [DeliveryOrderController::class, 'getExecutedOrder']);
+        Route::get('NewOrder', [DeliveryOrderController::class, 'getNewOrder']);
+
     });
 //    ------------- Route Maintenance ------------
     Route::prefix('maintenance')->group(function () {
@@ -60,9 +65,11 @@ Route::middleware('auth:api')->group(function () {
         Route::post('storeDevice', [ProductController::class, 'storeDevice']);
     });
 //    ------------ Route Order  ----------------------------
-//    Route::prefix('order')->group(function () {
-//        Route::get('allOrder', [AdminOrderController::class, 'getAllOrder']);
-//    });
+    Route::prefix('order')->group(function () {
+        Route::get('allOrder', [OrderController::class, 'getAllOrder']);
+        Route::get('getOrderById/{id}', [OrderController::class, 'getOrderById']);
+        Route::post('reject/{id}', [OrderController::class, 'rejectOrder']);
+    });
 
 });
 
@@ -76,6 +83,7 @@ Route::prefix('customer')->group(function () {
 
 Route::prefix('product')->group(function () {
     Route::get('allProducts', [ProductController::class, 'getAllProduct']);
+    Route::get('getProduct/{id}', [ProductController::class, 'getProductById']);
     Route::get('getKidsProduct', [ProductController::class, 'getKidsProduct']);
     Route::get('getMenProduct', [ProductController::class, 'getMenProduct']);
     Route::get('getWomenProduct', [ProductController::class, 'getWomenProduct']);
@@ -83,6 +91,10 @@ Route::prefix('product')->group(function () {
     Route::get('getDevicesProducts', [ProductController::class, 'getDevicesProducts']);
     Route::get('getLensesProducts', [ProductController::class, 'getLensesProducts']);
     Route::get('searchProduct/{numberModel}', [ProductController::class, 'searchProduct']);
+});
+
+Route::prefix('category')->group(function () {
+    Route::get('/', [CategoryController::class, 'getCategory']);
 });
 
 Route::post('login', [UserController::class, 'login']);

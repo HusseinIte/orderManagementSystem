@@ -6,6 +6,7 @@ namespace App\Services\Order;
 
 use App\Events\SendOrder;
 use App\Http\Resources\OrderCollection;
+use App\Http\Resources\OrderResource;
 use App\Models\Order\Order;
 use App\Models\Order\OrderItem;
 use App\Models\Shopping\Cart;
@@ -13,6 +14,7 @@ use App\Models\User\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use function Monolog\error;
+use function Symfony\Component\Routing\Loader\Configurator\collection;
 
 class CustomerOrderService
 {
@@ -20,7 +22,7 @@ class CustomerOrderService
     {
         $customer = User::find(Auth::id())->customer;
         $orders = $customer->orders;
-        return new OrderCollection($orders);
+        return OrderResource::collection($orders);
 
     }
 

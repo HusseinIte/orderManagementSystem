@@ -49,6 +49,7 @@
                                 @elseif($order->orderStatus=="الطلب جاهز في المستودع") badge-warning
                                   @elseif($order->orderStatus=="جاري شحن الطلب") badge-secondary
                                  @elseif($order->orderStatus=="تم تسليم الطلب") badge-success
+                                   @elseif($order->orderStatus=="الطلب مرفوض") badge-danger
                                  @endif">{{$order->orderStatus ."  "."بتاريخ"."  ". $order->updated_at}}</span>
                     </td>
 
@@ -57,6 +58,12 @@
                     <th>قيمة الطلب</th>
                     <td>{{$order->totalPrice}}</td>
                 </tr>
+                @if($order->orderStatus=="الطلب مرفوض")
+                    <tr>
+                        <th>سبب الرفض</th>
+                        <td>{{$order->totalPrice}}</td>
+                    </tr>
+                @endif
             </table>
         </div>
         <!-- /.card-body -->

@@ -21,7 +21,7 @@ class MoveOrderToWarehouse
     /**
      * Handle the event.
      */
-    public function handle(SendOrder $event): void
+    public function handle(SendOrder $event)
     {
         $order = $event->order;
         $order->departments()->attach(1, ['isExecute' => 0]);

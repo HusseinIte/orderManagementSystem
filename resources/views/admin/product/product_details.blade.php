@@ -16,7 +16,8 @@
 @endsection
 
 @section('content')
-    <div class="row justify-content-center text-cyan text-bold" style="margin-bottom:10px;">{{$product->manufactureCompany}}</div>
+    <div class="row justify-content-center text-cyan text-bold"
+         style="margin-bottom:10px;">{{$product->manufactureCompany}}</div>
     <div class="row justify-content-center">
         <div class=" col-4">
             <img src="{{route('ProductImage',$product->id)}}" class="product-image img-bordered img-circle"
@@ -83,14 +84,14 @@
                             <td>{{$product->deviceAttribute->details}}</td>
                         </tr>
                     @endif
-                        <tr>
-                            <th class="col-4">الكمية</th>
-                            <td>{{$product->amount}}</td>
-                        </tr>
-                        <tr>
-                            <th class="col-4">السعر</th>
-                            <td>{{$product->price}}</td>
-                        </tr>
+                    <tr>
+                        <th class="col-4">الكمية</th>
+                        <td>{{$product->amount}}</td>
+                    </tr>
+                    <tr>
+                        <th class="col-4">السعر</th>
+                        <td>{{$product->price}}</td>
+                    </tr>
                 </table>
             </div>
             <!-- /.card-body -->

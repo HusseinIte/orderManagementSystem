@@ -47,8 +47,4 @@ Route::group(['middleware' => 'guest:admin'], function () {
     Route::post('login', [AuthAdminController::class, 'login'])->name('admin.login');
 });
 
-//    ------------ Route Order  ----------------------------
-Route::prefix('order')->group(function () {
-    Route::get('allOrder', [AdminOrderController::class, 'getAllOrder']);
-});
 

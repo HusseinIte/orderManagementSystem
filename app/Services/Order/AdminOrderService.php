@@ -24,10 +24,4 @@ class AdminOrderService
         return view('admin.order.order_details', ['order' => $order,'items'=>$items]);
     }
 
-    public function getAllOrder()
-    {
-        return new OrderCollection(Order::all());
-    }
-
-
 }

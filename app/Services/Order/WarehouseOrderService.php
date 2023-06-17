@@ -5,7 +5,10 @@ namespace App\Services\Order;
 
 
 use App\Events\ExecuteOrder;
+use App\Events\RejectOrder;
 use App\Events\SendAlertProduct;
+use App\Http\Resources\OrderCollection;
+use App\Http\Resources\OrderResource;
 use App\Models\Order\Department;
 use App\Models\Order\Order;
 use App\Models\Order\OrderDepartment;
@@ -17,19 +20,20 @@ class WarehouseOrderService
     public function getAllOrder()
     {
         $department = Department::find(1);
-        return $department->orders;
+        $orders = $department->orders;
+        return OrderResource::collection($orders);
     }
 
     public function getExecutedOrder()
     {
         $department = Department::find(1);
-        return $department->orders()->wherePivot('isExecute', 1);
+        return $department->orders()->wherePivot('isExecute', 1)->get();
     }
 
     public function getNewOrder()
     {
         $department = Department::find(1);
-        return $department->orders()->wherePivot('isExecute', 0);
+        return $department->orders()->wherePivot('isExecute', 0)->get();
     }
 
     public function updateStock(Order $order)
@@ -75,6 +79,5 @@ class WarehouseOrderService
             }
         }
     }
-
 
 }

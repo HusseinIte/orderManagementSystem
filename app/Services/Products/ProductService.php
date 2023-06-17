@@ -14,8 +14,6 @@ use App\Models\Product\ProductAttribute;
 use App\Services\ImageService;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
-use function Symfony\Component\Routing\Loader\Configurator\collection;
-use function Symfony\Component\Translation\t;
 
 class ProductService
 {
@@ -30,6 +28,11 @@ class ProductService
     {
 
         return ProductResource::collection(Product::all());
+    }
+
+    public function getProductById($id)
+    {
+        return new ProductResource(Product::find($id));
     }
 
     public function getOneImageProduct($id)

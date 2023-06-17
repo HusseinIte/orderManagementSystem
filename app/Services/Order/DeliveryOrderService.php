@@ -7,6 +7,8 @@ namespace App\Services\Order;
 use App\Events\DeliverOrder;
 use App\Events\ReceiveOrderByDelivery;
 
+use App\Http\Resources\OrderCollection;
+use App\Http\Resources\OrderResource;
 use App\Models\Order\Department;
 use App\Models\Order\Order;
 
@@ -15,7 +17,8 @@ class DeliveryOrderService
     public function getAllOrder()
     {
         $department = Department::find(2);
-        return $department->orders;
+        $orders = $department->orders;
+        return OrderResource::collection($orders);
     }
 
     // Receive Order by delivery from warehouse
@@ -38,16 +41,17 @@ class DeliveryOrderService
             'message' => 'تم تسليم الطلب'
         ]);
     }
+
     public function getExecutedOrder()
     {
         $department = Department::find(2);
-        return $department->orders()->wherePivot('isExecute', 1);
+        return $department->orders()->wherePivot('isExecute', 1)->get();
     }
 
     public function getNewOrder()
     {
         $department = Department::find(2);
-        return $department->orders()->wherePivot('isExecute', 0);
+        return $department->orders()->wherePivot('isExecute', 0)->get();
     }
 
 }

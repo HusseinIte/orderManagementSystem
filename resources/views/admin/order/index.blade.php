@@ -55,6 +55,7 @@
                                 @elseif($order->orderStatus=="الطلب جاهز في المستودع") badge-warning
                                   @elseif($order->orderStatus=="جاري شحن الطلب") badge-secondary
                                  @elseif($order->orderStatus=="تم تسليم الطلب") badge-success
+                                   @elseif($order->orderStatus=="الطلب مرفوض") badge-danger
                                  @endif">{{$order->orderStatus}}</span>
                             </td>
                             <td>
@@ -91,6 +92,10 @@
             })
             .listen('DeliverOrder', (data) => {
                 location.reload();
+            })
+            .listen('RejectOrder', (data) => {
+                location.reload();
+                console.log(data.message);
             });
     </script>
 @endsection

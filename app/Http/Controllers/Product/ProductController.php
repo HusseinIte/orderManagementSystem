@@ -23,6 +23,11 @@ class ProductController extends Controller
         return $this->productService->getAllProduct();
     }
 
+    public function getProductById($id)
+    {
+        return $this->productService->getProductById($id);
+    }
+
     public function storeDevice(Request $request)
     {
         return $this->productService->storeDevice($request);

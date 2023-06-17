@@ -5,12 +5,14 @@ namespace App\Providers;
 use App\Events\DeliverOrder;
 use App\Events\ExecuteOrder;
 use App\Events\ReceiveOrderByDelivery;
+use App\Events\RejectOrder;
 use App\Events\SendOrder;
 use App\Listeners\ChangeOrderStatus;
 use App\Listeners\FinishOrderCycle;
 use App\Listeners\MoveOrderToCustomer;
 use App\Listeners\MoveOrderToDelivery;
 use App\Listeners\MoveOrderToWarehouse;
+use App\Listeners\SendRejectNotification;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -38,6 +40,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         DeliverOrder::class => [
             FinishOrderCycle::class,
+        ],
+        RejectOrder::class => [
+            SendRejectNotification::class
         ]
 
     ];

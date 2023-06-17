@@ -12,7 +12,7 @@ return new class extends Migration {
         Schema::create('device_attributes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->constrained('products');
-            $table->longText('details');
+            $table->text('details');
             $table->timestamps();
         });
     }

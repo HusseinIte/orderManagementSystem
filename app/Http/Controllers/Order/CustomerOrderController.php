@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Order;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\OrderCollection;
+use App\Models\Order\Order;
 use App\Models\User\User;
 use App\Services\Order\CustomerOrderService;
 use Illuminate\Http\Request;
@@ -28,4 +30,5 @@ class CustomerOrderController extends Controller
     {
         return $this->customerOrderService->sendOrder($request);
     }
+    
 }
