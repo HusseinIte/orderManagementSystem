@@ -1,7 +1,9 @@
 <?php
 
+
 use App\Http\Controllers\Offer\OfferController;
 use App\Http\Controllers\Order\AdminOrderController;
+use App\Http\Controllers\Order\InvoiceController;
 use App\Http\Controllers\Product\AdminProductController;
 use App\Http\Controllers\User\AdminController;
 use App\Http\Controllers\User\AuthAdminController;
@@ -46,5 +48,7 @@ Route::group(['middleware' => 'guest:admin'], function () {
     Route::get('login', [AuthAdminController::class, 'showAdminLogin'])->name('admin.showLogin');
     Route::post('login', [AuthAdminController::class, 'login'])->name('admin.login');
 });
+
+Route::get('invoice/{id}', [InvoiceController::class, 'Invoice']);
 
 
