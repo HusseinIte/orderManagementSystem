@@ -9,6 +9,7 @@ use App\Http\Resources\OrderCollection;
 use App\Http\Resources\OrderResource;
 use App\Models\Order\Order;
 use App\Models\Order\OrderItem;
+use App\Models\Product\Product;
 use App\Models\Shopping\Cart;
 use App\Models\User\User;
 use Illuminate\Http\Request;
@@ -26,31 +27,28 @@ class CustomerOrderService
 
     }
 
-    public function createOrder($cart, $customer)
+    public function createOrder(Request $request, $customer)
     {
-        $order = Order::firstOrCreate([
+        $order = Order::create([
             'customer_id' => $customer->id,
             'orderStatus' => 'الطلب قيد الإنتظار في المستودع',
             'orderType' => 'شراء',
-            'totalPrice' => $cart->totalPrice
+            'totalPrice' => $request->totalPrice
         ]);
-        $this->storeOrderItem($cart, $order->id);
+        $this->storeOrderItem($request, $order->id);
         return $order;
     }
 
-    public function storeOrderItem($cart, $id)
+    public function storeOrderItem($request, $id)
     {
-        $cartItems = $cart->cartItems;
+        $cartItems = $request->items;
         foreach ($cartItems as $item) {
-            OrderItem::firstOrCreate([
+            OrderItem::create([
                 'order_id' => $id,
-                'product_id' => $item->product_id,
-                'quantity' => $item->quantity
+                'product_id' => $item['product_id'],
+                'quantity' => $item['quantity']
             ]);
-            $item->delete();
         }
-        $cart->totalPrice = 0;
-        $cart->save();
     }
 
 // send order from user to warehouse
@@ -58,18 +56,17 @@ class CustomerOrderService
     {
         $user = User::find(Auth::id());
         $customer = $user->customer;
-        $cart = $user->cart;
-        $process = $this->processingOrder($cart);
+        $process = $this->processingOrder($request);
         if ($process['status'] == "error") {
             return $process;
         }
-        if ($cart->cartItems->isEmpty()) {
+        if (count($request->items) == 0) {
             return response()->json([
                 'status' => 'failed',
                 'message' => 'لايمكن إنشاء طلب من دون منتجات'
             ]);
         }
-        $order = $this->createOrder($cart, $customer);
+        $order = $this->createOrder($request, $customer);
         SendOrder::dispatch($order);
         return response()->json([
             'status' => 'success',
@@ -79,15 +76,15 @@ class CustomerOrderService
     }
 
 // processing order before create
-    public function processingOrder($cart)
+    public function processingOrder($request)
     {
-        $cartItems = $cart->cartItems;
+        $cartItems = $request->items;
         foreach ($cartItems as $item) {
-            $product = $item->product;
-            if ($item->quantity > $product->amount) {
+            $product = Product::find($item['product_id']);
+            if ($item['quantity'] > $product->amount) {
                 return [
                     'status' => 'error',
-                    'message' => 'this is overstock order reduce quantity for item :' . $item->id
+                    'message' => 'this is overstock order reduce quantity for product :' . $item['product_id']
                 ];
             }
         }

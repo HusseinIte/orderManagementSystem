@@ -59,15 +59,15 @@ class CartService
 
     }
 
-    public function getCartItem()
-    {
-        $cart = $this->getCartForUser();
-        return response()->json([
-            'status' => 'success',
-            'totalPrice' => $cart->totalPrice,
-            'Item' => CartItemResourse::collection($cart->cartItems)
-        ]);
-    }
+//    public function getCartItem()
+//    {
+//        $cart = $this->getCartForUser();
+//        return response()->json([
+//            'status' => 'success',
+//            'totalPrice' => $cart->totalPrice,
+//            'Item' => CartItemResourse::collection($cart->cartItems)
+//        ]);
+//    }
 
     public function getLensesToAddCart(Request $request)
     {
@@ -90,52 +90,10 @@ class CartService
                 'message' => 'هذا المنتج غير موجود'
             ]);
         }
-        $cart = $this->getCartForUser();
-        try {
-
-            $cartItem = CartItem::create([
-                'product_id' => $lensesProduct->first()->id,
-                'cart_id' => $cart->id,
-                'quantity' => 1
-            ]);
-        } catch (QueryException $e) {
-            rollback();
-            $errorMessage = 'هذا المنتج مضاف إلى السلة';
-            return response()->json([
-                'status' => 'failed',
-                'message' => $errorMessage]);
-        }
-        $this->updateTotalPriceCart($cartItem);
         return response()->json([
             'status' => 'success',
-            'message' => 'تم إضافة المنتج إلى السلة'
+            'product_id' => $lensesProduct->first()->product_id
         ]);
 
     }
-
-
-// parameter : id for cart Item
-    public function minusQuantityItem($id)
-    {
-        $cart_item = CartItem::find($id);
-        $quantity = $cart_item->quantity;
-        if ($quantity > 1) {
-            $cart_item->quantity = $quantity - 1;
-        }
-        $cart_item->quantity = 1;
-        $cart_item->save();
-        $this->updateTotalPriceCart($cart_item);
-
-    }
-
-    public function plusQuantityItem($id)
-    {
-        $cart_item = CartItem::find($id);
-        $quantity = $cart_item->quantity;
-        $cart_item->quantity = $quantity + 1;
-        $cart_item->save();
-        $this->updateTotalPriceCart($cart_item);
-    }
-
-
 }
