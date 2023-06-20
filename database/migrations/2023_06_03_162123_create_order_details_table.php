@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('order_id')->constrained('orders');
             $table->foreignId('image_id')->constrained('images');
-            $table->string('description');
+            $table->text('description');
             $table->timestamps();
         });
     }

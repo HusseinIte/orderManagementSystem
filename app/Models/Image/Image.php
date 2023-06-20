@@ -2,6 +2,7 @@
 
 namespace App\Models\Image;
 
+use App\Models\Order\OrderDetail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -24,7 +25,13 @@ use Illuminate\Database\Eloquent\Model;
 class Image extends Model
 {
     use HasFactory;
-    protected $fillable=[
+    protected $fillable = [
         'path'
     ];
+
+    public function orderDetail()
+    {
+
+        return $this->hasOne(OrderDetail::class);
+    }
 }

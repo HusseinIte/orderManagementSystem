@@ -45,7 +45,8 @@
                 </tr>
                 <tr>
                     <th>حالة الطلب</th>
-                    <td><span class="badge @if($order->orderStatus==("الطلب قيد الإنتظار في المستودع"||"الطلب قيد الإنتظار في الصيانة"))badge-info
+                    <td><span
+                            class="badge @if($order->orderStatus==("الطلب قيد الإنتظار في المستودع"||"الطلب قيد الإنتظار في الصيانة"))badge-info
                                 @elseif($order->orderStatus=="الطلب جاهز في المستودع") badge-warning
                                   @elseif($order->orderStatus=="جاري شحن الطلب") badge-secondary
                                  @elseif($order->orderStatus=="تم تسليم الطلب") badge-success
@@ -69,47 +70,6 @@
         <!-- /.card-body -->
     </div>
     <!-- /.card -->
-    <div class="container">
-        <div class="row card-header border">
-            <h3 class="card-title float-left"> منتجات الطلب</h3>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <table class="table table-image">
-                    <thead>
-                    <tr>
-                        <th scope="col">id</th>
-                        <th scope="col">رمز المنتج</th>
-                        <th scope="col">صورة</th>
-                        <th scope="col">الصنف</th>
-                        <th scope="col">السعر</th>
-                        <th scope="col">الكمية</th>
-                        <th scope="col"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($items as $item)
-                        <tr>
-                            <th scope="row">{{$item->id}}</th>
-                            <th scope="row">{{$item->product->numberModel}}</th>
-                            <td class="w-25">
-                                <img
-                                    src="{{route('ProductImage',$item->product_id)}}"
-                                    class="img-fluid img-thumbnai img-lg float-left" alt="Sheep">
-                            </td>
-                            <td>{{$item->product->category->name}}</td>
-                            <td>{{$item->product->price}}</td>
-                            <td>{{$item->quantity}}</td>
-                            <td>
-                                <button type="button" class="btn btn-block btn-secondary">تفاصيل</button>
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
     <div class="row no-print">
         <div class="col-12 align-content-center">
             <a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>

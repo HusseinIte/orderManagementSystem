@@ -42,11 +42,16 @@ class Order extends Model
         'orderType',
         'totalPrice'
     ];
-    protected $hidden=['pivot'];
+    protected $hidden = ['pivot'];
 
     public function customer()
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    public function orderDetail()
+    {
+        return $this->hasOne(OrderDetail::class);
     }
 
     public function orderItems()

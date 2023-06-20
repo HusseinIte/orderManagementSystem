@@ -8,10 +8,12 @@ use App\Events\SendOrder;
 use App\Http\Resources\OrderCollection;
 use App\Http\Resources\OrderResource;
 use App\Models\Order\Order;
+use App\Models\Order\OrderDetail;
 use App\Models\Order\OrderItem;
 use App\Models\Product\Product;
 use App\Models\Shopping\Cart;
 use App\Models\User\User;
+use App\Services\ImageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use function Monolog\error;
@@ -19,6 +21,13 @@ use function Symfony\Component\Routing\Loader\Configurator\collection;
 
 class CustomerOrderService
 {
+    protected $imageService;
+
+    public function __construct(ImageService $imageService)
+    {
+        $this->imageService = $imageService;
+    }
+
     public function getMyOrder()
     {
         $customer = User::find(Auth::id())->customer;
@@ -27,7 +36,7 @@ class CustomerOrderService
 
     }
 
-    public function createOrder(Request $request, $customer)
+    public function createPurchaseOrder(Request $request, $customer)
     {
         $order = Order::create([
             'customer_id' => $customer->id,
@@ -37,6 +46,46 @@ class CustomerOrderService
         ]);
         $this->storeOrderItem($request, $order->id);
         return $order;
+    }
+
+    public function storeOrderDetails($request, $id)
+    {
+        $image = $this->imageService->uploadImage($request);
+        OrderDetail::create([
+            'order_id' => $id,
+            'image_id' => $image->id,
+            'description' => $request->description
+        ]);
+    }
+
+    public function createMaintenanceOrder(Request $request, $customer)
+    {
+        $order = Order::create([
+            'customer_id' => $customer->id,
+            'orderStatus' => 'الطلب قيد الإنتظار في الصيانة',
+            'orderType' => 'صيانة',
+            'totalPrice' => 0
+        ]);
+        $this->storeOrderDetails($request, $order->id);
+        return $order;
+    }
+
+// processing order before create
+    public function processingPurchaseOrder($request)
+    {
+        $cartItems = $request->items;
+        foreach ($cartItems as $item) {
+            $product = Product::find($item['product_id']);
+            if ($item['quantity'] > $product->amount) {
+                return [
+                    'status' => 'error',
+                    'message' => 'this is overstock order reduce quantity for product :' . $item['product_id']
+                ];
+            }
+        }
+        return [
+            'status' => 'success',
+        ];
     }
 
     public function storeOrderItem($request, $id)
@@ -52,11 +101,11 @@ class CustomerOrderService
     }
 
 // send order from user to warehouse
-    public function sendOrder(Request $request)
+    public function sendPurchaseOrder(Request $request)
     {
         $user = User::find(Auth::id());
         $customer = $user->customer;
-        $process = $this->processingOrder($request);
+        $process = $this->processingPurchaseOrder($request);
         if ($process['status'] == "error") {
             return $process;
         }
@@ -66,7 +115,8 @@ class CustomerOrderService
                 'message' => 'لايمكن إنشاء طلب من دون منتجات'
             ]);
         }
-        $order = $this->createOrder($request, $customer);
+        $order = $this->createPurchaseOrder($request, $customer);
+        $order->departments()->attach(1, ['isExecute' => 0]);
         SendOrder::dispatch($order);
         return response()->json([
             'status' => 'success',
@@ -75,22 +125,19 @@ class CustomerOrderService
 
     }
 
-// processing order before create
-    public function processingOrder($request)
+    // send order from user to maintenance
+    public function sendMaintenanceOrder(Request $request)
     {
-        $cartItems = $request->items;
-        foreach ($cartItems as $item) {
-            $product = Product::find($item['product_id']);
-            if ($item['quantity'] > $product->amount) {
-                return [
-                    'status' => 'error',
-                    'message' => 'this is overstock order reduce quantity for product :' . $item['product_id']
-                ];
-            }
-        }
-        return [
+        $user = User::find(Auth::id());
+        $customer = $user->customer;
+        $order = $this->createMaintenanceOrder($request, $customer);
+        $order->departments()->attach(3, ['isExecute' => 0]);
+        SendOrder::dispatch($order);
+        return response()->json([
             'status' => 'success',
-        ];
+            'message' => 'تم إرسال الطلب بنجاح',
+        ]);
+
     }
 
 }

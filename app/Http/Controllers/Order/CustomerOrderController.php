@@ -26,9 +26,13 @@ class CustomerOrderController extends Controller
     }
 
 
-    public function sendOrder(Request $request)
+    public function sendPurchaseOrder(Request $request)
     {
-        return $this->customerOrderService->sendOrder($request);
+        return $this->customerOrderService->sendPurchaseOrder($request);
     }
-    
+
+    public function sendMaintenanceOrder(Request $request)
+    {
+        return $this->customerOrderService->sendMaintenanceOrder($request);
+    }
 }

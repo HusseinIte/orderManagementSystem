@@ -21,6 +21,9 @@ class AdminOrderService
     {
         $order = Order::find($id);
         $items=$order->orderItems;
+        if($order->orderType=="صيانة"){
+            return view('admin.order.orderMaintenanceDetail', ['order' => $order,'items'=>$items]);
+        }
         return view('admin.order.order_details', ['order' => $order,'items'=>$items]);
     }
 

@@ -4,6 +4,7 @@ use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\Image\ImageController;
 use App\Http\Controllers\Order\CustomerOrderController;
 use App\Http\Controllers\Order\DeliveryOrderController;
+use App\Http\Controllers\Order\MaintenanceOrderController;
 use App\Http\Controllers\Order\OrderController;
 use App\Http\Controllers\Order\WarehouseOrderController;
 use App\Http\Controllers\Product\ProductController;
@@ -35,7 +36,8 @@ Route::middleware('auth:api')->group(function () {
         Route::get('getCartItem', [CartController::class, 'getCartItem']);
         Route::post('/addLensesToCart', [CartController::class, 'addLensesToCart']);
         Route::get('getMyOrder', [CustomerOrderController::class, 'getMyOrder']);
-        Route::post('sendOrder', [CustomerOrderController::class, 'sendOrder']);
+        Route::post('Purchase/sendOrder', [CustomerOrderController::class, 'sendPurchaseOrder']);
+        Route::post('Maintenance/sendOrder', [CustomerOrderController::class, 'sendMaintenanceOrder']);
     });
 //    -------------- Route Warehouse --------------
     Route::prefix('warehouse')->group(function () {

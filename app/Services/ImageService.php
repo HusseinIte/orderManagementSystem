@@ -18,13 +18,12 @@ use function PHPUnit\Framework\size;
 class ImageService
 {
 //    upload one image
-    public function uploadPublicImage(Request $request)
+    public function uploadImage(Request $request)
     {
-        $file = $request->file('images');
-        $name = $file->hashName();
-        $path = $file->storeAs('images', $name, 'my_files');
+        $image = $request->file('image');
+        $path = $image->store('images', 'my_files');
         return Image::create([
-            'name' => $name
+            'path' => $path
         ]);
     }
 

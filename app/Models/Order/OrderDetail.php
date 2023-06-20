@@ -2,6 +2,7 @@
 
 namespace App\Models\Order;
 
+use App\Models\Image\Image;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -28,4 +29,20 @@ use Illuminate\Database\Eloquent\Model;
 class OrderDetail extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'order_id',
+        'image_id',
+        'description'
+    ];
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
+
+    public function image()
+    {
+        return $this->belongsTo(Image::class);
+    }
 }

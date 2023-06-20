@@ -29,9 +29,6 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        SendOrder::class => [
-            MoveOrderToWarehouse::class,
-        ],
         ExecuteOrder::class => [
             MoveOrderToDelivery::class,
         ],

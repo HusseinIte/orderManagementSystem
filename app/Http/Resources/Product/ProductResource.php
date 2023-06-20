@@ -9,16 +9,14 @@ class ProductResource extends JsonResource
 {
     public function setAttributes()
     {
-        $category=$this->category;
-     if($category->name=="عدسات"){
-         return $this->lensesAttribute;
-     }
-     elseif ($category->name=="إطارات"){
-         return $this->frameAttribute;
-     }
-     else{
-         return $this->deviceAttribute;
-     }
+        $category = $this->category;
+        if ($category->name == "عدسات") {
+            return $this->lensesAttribute;
+        } elseif ($category->name == "إطارات") {
+            return $this->frameAttribute;
+        } else {
+            return $this->deviceAttribute;
+        }
     }
 
     public function setImages($images)
@@ -39,6 +37,7 @@ class ProductResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'productType' => $this->category->name,
             'numberModel' => $this->numberModel,
             'manufactureCompany' => $this->manufactureCompany,
             'amount' => $this->amount,
