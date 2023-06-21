@@ -14,7 +14,9 @@
 @section('contentheaderactive')
     تفاصيل
 @endsection
-
+@section('CustomerActive')
+    active
+@endsection
 @section('content')
     <div class="row justify-content-center">
         <div class="col-8">

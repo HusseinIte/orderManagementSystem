@@ -14,6 +14,9 @@
 @section('contentheaderactive')
     إضافة
 @endsection
+@section('empActive')
+    active
+@endsection
 @section('content')
     <div class="card card-secondary col-8" style="padding:0;">
         <div class="card-header">

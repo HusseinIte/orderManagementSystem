@@ -11,6 +11,9 @@
 @section('contentheaderactive')
     الموظفين
 @endsection
+@section('empActive')
+    active
+@endsection
 @section('content')
     <div class="card-footer clearfix">
         <a href="{{route('admin.employee.create')}}" class="btn btn-secondary float-left"><i class="fas fa-plus"></i>إضافة

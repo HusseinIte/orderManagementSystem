@@ -40,6 +40,7 @@ Route::middleware('auth:admin')->group(function () {
     });
     Route::prefix('order')->group(function () {
         Route::get('/', [AdminOrderController::class, 'index'])->name('admin.order.index');
+        Route::get('/create', [AdminOrderController::class, 'create'])->name('admin.order.create');
         Route::get('details/{id}', [AdminOrderController::class, 'getOrderDetails'])->name('admin.order.details');
 
     });

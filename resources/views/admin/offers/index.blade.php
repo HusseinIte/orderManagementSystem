@@ -11,7 +11,9 @@
 @section('contentheaderactive')
     العروض
 @endsection
-
+@section('OfferActive')
+    active
+@endsection
 @section('content')
     <div class="container">
         <div class="row">

@@ -12,6 +12,18 @@
     الطلبات
 @endsection
 
+@section('index')
+    active
+@endsection
+
+@section('order')
+    active
+@endsection
+@section('menu-open')
+    menu-open
+@endsection
+
+
 @section('content')
     <!-- TABLE: LATEST ORDERS -->
     <div class="card" id="app">
@@ -51,7 +63,8 @@
                             <td>
                                 <div class="sparkbar" data-color="#00a65a" data-height="20">{{$order->totalPrice}}</div>
                             </td>
-                            <td><span class="badge @if($order->orderStatus==("الطلب قيد الإنتظار في المستودع"||"الطلب قيد الإنتظار في الصيانة"))badge-info
+                            <td><span
+                                    class="badge @if($order->orderStatus==("الطلب قيد الإنتظار في المستودع"||"الطلب قيد الإنتظار في الصيانة"))badge-info
                                 @elseif($order->orderStatus=="الطلب جاهز في المستودع") badge-warning
                                   @elseif($order->orderStatus=="جاري شحن الطلب") badge-secondary
                                  @elseif($order->orderStatus=="تم تسليم الطلب") badge-success

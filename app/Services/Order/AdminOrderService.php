@@ -17,14 +17,19 @@ class AdminOrderService
         return view('admin.order.index', ['orders' => $orders]);
     }
 
+    public function create()
+    {
+        return view('admin.order.create');
+    }
+
     public function getOrderDetails($id)
     {
         $order = Order::find($id);
-        $items=$order->orderItems;
-        if($order->orderType=="صيانة"){
-            return view('admin.order.orderMaintenanceDetail', ['order' => $order,'items'=>$items]);
+        $items = $order->orderItems;
+        if ($order->orderType == "صيانة") {
+            return view('admin.order.orderMaintenanceDetail', ['order' => $order, 'items' => $items]);
         }
-        return view('admin.order.order_details', ['order' => $order,'items'=>$items]);
+        return view('admin.order.order_details', ['order' => $order, 'items' => $items]);
     }
 
 }

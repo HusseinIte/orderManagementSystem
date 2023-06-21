@@ -20,6 +20,10 @@ class AdminOrderController extends Controller
     {
         return $this->adminOrderService->index();
     }
+    public function create()
+    {
+        return $this->adminOrderService->create();
+    }
     public function getOrderDetails($id)
     {
         return $this->adminOrderService->getOrderDetails($id);

@@ -11,7 +11,9 @@
 @section('contentheaderactive')
     المنتجات
 @endsection
-
+@section('PActive')
+    active
+@endsection
 @section('content')
     <div class="container">
         <div class="row">

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\Image\ImageController;
 use App\Http\Controllers\Order\CustomerOrderController;
@@ -79,6 +80,7 @@ Route::middleware('auth:api')->group(function () {
 //    --------------  Route Customer --------------
 Route::prefix('customer')->group(function () {
     Route::post('register', [CustomerController::class, 'register']);
+    Route::post('email_verification', [EmailVerificationController::class, 'email_verification']);
 });
 
 //    --------------  Route Product --------------

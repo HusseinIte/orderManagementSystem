@@ -69,15 +69,34 @@
         </div>
         <!-- /.card-body -->
     </div>
-    <!-- /.card -->
-    <div class="row no-print">
-        <div class="col-12 align-content-center">
-            <a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
-            <button type="button" class="btn btn-primary">
-                <i class="fas fa-download"></i> Generate PDF
-            </button>
+    <div class="col-8">
+        <div class="card-header border">
+            <h3 class="card-title float-left">تفاصيل الطلب</h3>
         </div>
+        <!-- /.card-header -->
+        <div class="card-body p-0">
+            <table class="table  table-bordered">
+                <tr>
+                    <th class="col-4">الصورة المرفقة</th>
+                    <td><img style="height: 500px; width: 500px" src="{{route('image.show',$order->orderDetail->image->path)}}" alt=""></td>
+                </tr>
+                <tr>
+                    <th>الوصف</th>
+                    <td>{{$order->orderDetail->description}}</td>
+                </tr>
+            </table>
+        </div>
+        <!-- /.card-body -->
     </div>
+    <!-- /.card -->
+{{--    <div class="row no-print">--}}
+{{--        <div class="col-12 align-content-center">--}}
+{{--            <a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>--}}
+{{--            <button type="button" class="btn btn-primary">--}}
+{{--                <i class="fas fa-download"></i> Generate PDF--}}
+{{--            </button>--}}
+{{--        </div>--}}
+{{--    </div>--}}
 @endsection
 
 

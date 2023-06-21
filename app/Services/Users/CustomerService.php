@@ -50,17 +50,16 @@ class CustomerService
             'user_id' => $user->id,
             'totalPrice' => 0
         ]);
-        $token = Auth::login($user);
+//        $token = Auth::login($user);
         $customer = $this->storeCustomer($request, $user);
-//        $user->notify(new EmailVerificationNotification);
+        $user->notify(new EmailVerificationNotification);
         return response()->json([
             'status' => 'success',
-            'message' => 'User created successfully',
-            'customer' => new CustomerResource($customer),
-            'authorisation' => [
-                'token' => $token,
-                'type' => 'bearer',
-            ]
+            'message'=>'إدخال الكود لإتمام عملية التسجيل'
+//            'authorisation' => [
+//                'token' => $token,
+//                'type' => 'bearer',
+//            ]
         ]);
     }
 

@@ -202,16 +202,16 @@
     <!-- Bootstrap 4 -->
 
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{asset('admin/plugins/fontawesome-free/css/all.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/admin/plugins/fontawesome-free/css/all.min.css')}}">
     <!-- Ionicons -->
-    <link rel="stylesheet" href="{{asset('admin/fonts/SansPro/SansPro.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/admin/fonts/SansPro/SansPro.min.css')}}">
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{asset('admin/dist/css/adminlte.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/admin/dist/css/adminlte.min.css')}}">
 
     <!-- Google Font: Source Sans Pro -->
-    <link href="{{asset('admin/fonts/SansPro/SansPro.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/admin/fonts/SansPro/SansPro.css')}}" rel="stylesheet">
 </head>
-<body onload="window.print();">
+<body>
 <div class="wrapper">
     <!-- Main content -->
     <section class="invoice">
@@ -313,13 +313,14 @@
             <!-- accepted payments column -->
             <div class="col-6">
                 <p class="lead">Payment Methods:</p>
-                <img src="../../dist/img/credit/visa.png" alt="Visa">
-                <img src="../../dist/img/credit/mastercard.png" alt="Mastercard">
-                <img src="../../dist/img/credit/american-express.png" alt="American Express">
-                <img src="../../dist/img/credit/paypal2.png" alt="Paypal">
+                <img src="{{asset('assets/admin/dist/img/credit/visa.png')}}" alt="Visa">
+                <img src="{{asset('assets/admin/dist/img/credit/mastercard.png')}}" alt="Mastercard">
+                <img src="{{asset('assets/admin/dist/img/credit/american-express.png')}}" alt="American Express">
+                <img src="{{asset('assets/admin/dist/img/credit/paypal2.png')}}" alt="Paypal">
 
                 <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
-                    Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem plugg dopplr
+                    Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem
+                    plugg dopplr
                     jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.
                 </p>
             </div>

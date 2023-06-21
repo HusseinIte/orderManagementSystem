@@ -24,7 +24,7 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">
-                    <a href="{{route('admin.employee.index')}}" class="nav-link">
+                    <a href="{{route('admin.employee.index')}}" class="nav-link @yield('empActive')">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             الموظفين
@@ -32,7 +32,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('admin.customer.index')}}" class="nav-link">
+                    <a href="{{route('admin.customer.index')}}" class="nav-link @yield('CustomerActive')">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             الزبائن
@@ -40,23 +40,40 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('admin.product.index')}}" class="nav-link">
+                    <a href="{{route('admin.product.index')}}" class="nav-link @yield('PActive')">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             المنتجات
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="{{route('admin.order.index')}}" class="nav-link">
+                <li class="nav-item has-treeview @yield('menu-open')">
+                    <a href="#" class="nav-link @yield('order') ">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             الطلبات
+                            <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item ">
+                            <a href="{{route('admin.order.index')}}" class="nav-link @yield('index')">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>
+                                    عرض الطلبات
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('admin.order.create')}}" class="nav-link  @yield('create')">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>إضافة طلب مباشر</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('admin.offer.index')}}" class="nav-link">
+                    <a href="{{route('admin.offer.index')}}" class="nav-link @yield('OfferActive')">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             العروض

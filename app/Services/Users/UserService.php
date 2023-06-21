@@ -9,16 +9,20 @@ use App\Models\User\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class UserService
 {
-    public function storeUser(Request $request,$user_type)
+    public function storeUser(Request $request, $user_type)
     {
+        $verification_code = Str::random(6);
         return User::create([
-            'user_type_id' =>$user_type,
+            'user_type_id' => $user_type,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'verification_code' => $verification_code
         ]);
+
     }
 
     public function login(Request $request)
@@ -38,15 +42,20 @@ class UserService
         }
 
         $user = Auth::user();
+        if ($user->is_verified) {
+            return response()->json([
+                'status' => 'success',
+                'user' => new UserResource($user),
+                'authorisation' => [
+                    'token' => $token,
+                    'type' => 'bearer',
+                ]
+            ]);
+        }
         return response()->json([
-            'status' => 'success',
-            'user' =>new UserResource($user),
-            'authorisation' => [
-                'token' => $token,
-                'type' => 'bearer',
-            ]
+            'status' => 'failed',
+            'message' => 'الرجاء إدخال كود التحقق'
         ]);
-
     }
 
 

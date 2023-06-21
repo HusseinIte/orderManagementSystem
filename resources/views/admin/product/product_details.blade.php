@@ -14,7 +14,9 @@
 @section('contentheaderactive')
     تفاصيل
 @endsection
-
+@section('PActive')
+    active
+@endsection
 @section('content')
     <div class="row justify-content-center text-cyan text-bold"
          style="margin-bottom:10px;">{{$product->manufactureCompany}}</div>

@@ -166,10 +166,9 @@ return [
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         BeyondCode\LaravelWebSockets\WebSocketsServiceProvider::class,
-         App\Providers\BroadcastServiceProvider::class,
+        App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Ichtrojan\Otp\OtpServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 //        Barryvdh\DomPDF\ServiceProvider::class,
         niklasravnsborg\LaravelPdf\PdfServiceProvider::class,
@@ -188,7 +187,6 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
-        'Otp'=>Ichtrojan\Otp\Otp::class,
 //        'PDF' => Barryvdh\DomPDF\Facade::class,
         'PDF' => niklasravnsborg\LaravelPdf\Facades\Pdf::class
     ])->toArray(),
