@@ -20,10 +20,17 @@ class AdminOrderController extends Controller
     {
         return $this->adminOrderService->index();
     }
+
     public function create()
     {
         return $this->adminOrderService->create();
     }
+
+    public function showDirectOrder()
+    {
+        return $this->adminOrderService->showDirectOrder();
+    }
+
     public function getOrderDetails($id)
     {
         return $this->adminOrderService->getOrderDetails($id);
@@ -32,5 +39,10 @@ class AdminOrderController extends Controller
     public function getAllOrder()
     {
         return $this->adminOrderService->getAllOrder();
+    }
+
+    public function sendDirectOrder(Request $request)
+    {
+        return $this->adminOrderService->sendDirectOrder($request);
     }
 }

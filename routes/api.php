@@ -43,9 +43,16 @@ Route::middleware('auth:api')->group(function () {
 //    -------------- Route Warehouse --------------
     Route::prefix('warehouse')->group(function () {
         Route::get('allOrder', [WarehouseOrderController::class, 'getAllOrder']);
-        Route::get('executedOrder', [WarehouseOrderController::class, 'getExecutedOrder']);
+        Route::get('OrderExecuted', [WarehouseOrderController::class, 'getOrderExecuted']);
         Route::get('NewOrder', [WarehouseOrderController::class, 'getNewOrder']);
         Route::get('executeOrder/{id}', [WarehouseOrderController::class, 'executeOrder']);
+        Route::prefix('direct')->group(function () {
+            Route::get('allOrder', [WarehouseOrderController::class, 'getAllDirectOrder']);
+            Route::get('OrderExecuted', [WarehouseOrderController::class, 'getAllDirectOrderExecuted']);
+            Route::get('NewOrders', [WarehouseOrderController::class, 'getAllNewDirectOrder']);
+            Route::get('executeOrder/{id}', [WarehouseOrderController::class, 'executeDirectOrder']);
+        });
+
     });
 //    ------------- Route Delivery ---------------
     Route::prefix('delivery')->group(function () {

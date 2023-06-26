@@ -41,6 +41,8 @@ Route::middleware('auth:admin')->group(function () {
     Route::prefix('order')->group(function () {
         Route::get('/', [AdminOrderController::class, 'index'])->name('admin.order.index');
         Route::get('/create', [AdminOrderController::class, 'create'])->name('admin.order.create');
+        Route::post('sendOrder', [AdminOrderController::class, 'sendDirectOrder'])->name('admin.order.send');
+        Route::get('/direct', [AdminOrderController::class, 'showDirectOrder'])->name('admin.order.direct');
         Route::get('details/{id}', [AdminOrderController::class, 'getOrderDetails'])->name('admin.order.details');
 
     });

@@ -3,6 +3,7 @@
 namespace App\Models\Product;
 
 use App\Models\Category\Category;
+use App\Models\Order\DirectOrderItem;
 use App\Models\Order\OrderItem;
 use App\Models\Shopping\CartItem;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -64,6 +65,7 @@ class Product extends Model
     {
         return $this->hasOne(FrameAttribute::class);
     }
+
     public function lensesAttribute()
     {
         return $this->hasOne(LensesAttribute::class);
@@ -87,5 +89,10 @@ class Product extends Model
     public function orderItem()
     {
         return $this->hasOne(OrderItem::class);
+    }
+
+    public function directOrderItem()
+    {
+        return $this->hasOne(DirectOrderItem::class);
     }
 }

@@ -64,6 +64,14 @@
                                 </p>
                             </a>
                         </li>
+                        <li class="nav-item ">
+                            <a href="{{route('admin.order.direct')}}" class="nav-link @yield('direct')">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>
+                                    عرض الطلبات المباشرة
+                                </p>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a href="{{route('admin.order.create')}}" class="nav-link  @yield('create')">
                                 <i class="far fa-circle nav-icon"></i>
