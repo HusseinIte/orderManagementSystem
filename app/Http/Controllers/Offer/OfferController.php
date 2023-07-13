@@ -19,4 +19,9 @@ class OfferController extends Controller
     {
         return $this->offerService->index();
     }
+
+    public function addDiscount(Request $request)
+    {
+        return $this->offerService->addDiscount($request);
+    }
 }

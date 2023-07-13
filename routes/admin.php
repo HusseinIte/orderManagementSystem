@@ -37,6 +37,8 @@ Route::middleware('auth:admin')->group(function () {
 
     Route::prefix('offer')->group(function () {
         Route::get('/', [OfferController::class, 'index'])->name('admin.offer.index');
+        Route::post('/addDiscount', [OfferController::class, 'addDiscount'])->name('admin.offer.addDiscount');
+
     });
     Route::prefix('order')->group(function () {
         Route::get('/', [AdminOrderController::class, 'index'])->name('admin.order.index');
@@ -51,7 +53,5 @@ Route::group(['middleware' => 'guest:admin'], function () {
     Route::get('login', [AuthAdminController::class, 'showAdminLogin'])->name('admin.showLogin');
     Route::post('login', [AuthAdminController::class, 'login'])->name('admin.login');
 });
-
-Route::get('invoice/{id}', [InvoiceController::class, 'Invoice']);
 
 

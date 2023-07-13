@@ -5,6 +5,7 @@ use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\Image\ImageController;
 use App\Http\Controllers\Order\CustomerOrderController;
 use App\Http\Controllers\Order\DeliveryOrderController;
+use App\Http\Controllers\Order\InvoiceController;
 use App\Http\Controllers\Order\MaintenanceOrderController;
 use App\Http\Controllers\Order\OrderController;
 use App\Http\Controllers\Order\WarehouseOrderController;
@@ -114,4 +115,6 @@ Route::post('login', [UserController::class, 'login']);
 Route::get('images/{filename}', [ImageController::class, 'showImage'])->name('image.show')->where('filename', '.*');;
 Route::get('ProductImage/{id}', [ProductController::class, 'getOneImageProduct'])->name('ProductImage');
 
-
+// invoice
+Route::get('PdfInvoice/{id}', [InvoiceController::class, 'GeneratePdfInvoice'])->name('generatePdf');
+Route::get('printInvoice/{id}', [InvoiceController::class, 'PrintInvoice'])->name('printInvoice');

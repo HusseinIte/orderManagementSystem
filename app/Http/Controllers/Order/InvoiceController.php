@@ -10,11 +10,19 @@ use niklasravnsborg\LaravelPdf\Facades\Pdf;
 
 class InvoiceController extends Controller
 {
-    public function Invoice($id)
+    public function GeneratePdfInvoice($id)
     {
         $order = Order::find($id);
         $items = $order->orderItems;
-        $pdf = PDF::loadView('admin.order.invoice_pdf',['order' => $order,'items'=>$items]);
-        return $pdf->download('techsolutionstuff.pdf');
+        $pdf = PDF::loadView('admin.order.invoice_pdf', ['order' => $order, 'items' => $items]);
+        return $pdf->download('international.pdf');
+    }
+
+    public function PrintInvoice($id)
+    {
+        $order = Order::find($id);
+        $items = $order->orderItems;
+        return View('admin.order.invoice_pdf', ['order' => $order, 'items' => $items]);
+//        return $pdf->download('international.pdf');
     }
 }

@@ -45,7 +45,8 @@
                 </tr>
                 <tr>
                     <th>حالة الطلب</th>
-                    <td><span class="badge @if($order->orderStatus==("الطلب قيد الإنتظار في المستودع"||"الطلب قيد الإنتظار في الصيانة"))badge-info
+                    <td><span
+                            class="badge @if($order->orderStatus==("الطلب قيد الإنتظار في المستودع"||"الطلب قيد الإنتظار في الصيانة"))badge-info
                                 @elseif($order->orderStatus=="الطلب جاهز في المستودع") badge-warning
                                   @elseif($order->orderStatus=="جاري شحن الطلب") badge-secondary
                                  @elseif($order->orderStatus=="تم تسليم الطلب") badge-success
@@ -112,10 +113,10 @@
     </div>
     <div class="row no-print">
         <div class="col-12 align-content-center">
-            <a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
-            <button type="button" class="btn btn-primary">
-                <i class="fas fa-download"></i> Generate PDF
-            </button>
+            <a href="{{route('printInvoice',$order->id)}}" target="_blank" class="btn btn-default"><i
+                    class="fas fa-print"></i> Print</a>
+            <a href="{{route('generatePdf',$order->id)}}"
+               class="btn  btn-secondary"> <i class="fas fa-download"></i> Generate PDF</a>
         </div>
     </div>
 @endsection
